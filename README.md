@@ -9,7 +9,13 @@
 
 中枢解决的不是“让 AI 会写代码”，而是长周期 AI 开发中的**上下文连续性、阶段统筹、施工审计、模型与线程决策、风险边界，以及最小下一步**。
 
-> **HERO_ASSET_PENDING** — 此处预留 `assets/zhongshu-hero.png`。建议规格为 1600 × 700（或相近宽屏比例）的轻量 PNG：Owner → ChatGPT Project → 中枢 → Coding Agent，并带 Evidence 回路；不写死版本号、不使用官方 Logo 或合作暗示。
+<p align="center">
+  <img
+    src="assets/zhongshu-hero.png"
+    alt="Zhongshu orchestration overview"
+    width="100%"
+  />
+</p>
 
 **[5 分钟开始](#5-分钟开始)** · **[Latest Release](../../releases/latest)** · **[完整部署说明](README_部署与使用.md)**
 
