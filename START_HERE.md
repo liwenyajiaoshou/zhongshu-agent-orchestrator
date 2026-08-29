@@ -33,4 +33,4 @@ ZHONGSHU_RUNTIME_READY
 # 需要高级说明？
 
 如果你需要了解更高级的用法、线程治理策略或如何与卫兵配合，请参阅：
-[README_部署与使用.md](README_部署与使用.md) 或官方代码仓库的在线文档。
+[README_部署与使用.md](https://github.com/liwenyajiaoshou/zhongshu-agent-orchestrator/blob/main/README_%E9%83%A8%E7%BD%B2%E4%B8%8E%E4%BD%BF%E7%94%A8.md) 或官方代码仓库的在线文档。

@@ -27,7 +27,7 @@
 1. 从 Release 页面下载 Latest Runtime Pack (ZIP文件)
 2. 解压 ZIP 文件
 3. 打开解压后的 `project-upload/` 目录
-4. 全选并上传其中 9 个文件到 ChatGPT Project 的 Project Sources
+4. 全选并上传 `project-upload/` 中的所有文件到 ChatGPT Project 的 Project Sources
 5. 打开解压根目录的 `PROJECT_INSTRUCTIONS.txt`
 6. 复制全文到 ChatGPT Project 的 Project Instructions
 7. 发送安装自检提示词（见下）

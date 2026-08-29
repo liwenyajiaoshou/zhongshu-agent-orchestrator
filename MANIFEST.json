@@ -1,17 +1,17 @@
 {
-  "name": "\u4e2d\u67a2",
+  "name": "中枢",
   "runtime_version": "V1.4",
   "stage": "S2.3",
   "date": "2026-08-27",
   "upgrade_focus": [
-    "\u91cd\u590d\u5931\u8d25\u6362\u6321",
-    "\u53d7\u7ea6\u675f\u81ea\u4e3b\u8c03\u8bd5",
-    "\u590d\u6742\u8c03\u8bd5\u524d\u5168\u94fe\u5ba1\u8ba1",
-    "Codex \u4e0a\u4e0b\u6587\u9971\u548c\u4e0e\u538b\u7f29\u4ea4\u63a5",
-    "\u5bf9\u8bdd\u7ebf\u7a0b / Codex \u7ebf\u7a0b\u672f\u8bed\u533a\u5206"
+    "重复失败换挡",
+    "受约束自主调试",
+    "复杂调试前全链审计",
+    "Codex 上下文饱和与压缩交接",
+    "对话线程 / Codex 线程术语区分"
   ],
   "latest_upgrade": "Host execution gating and minimum Owner Gate",
-  "scope_note": "\u4ec5\u8c03\u6574 Codex \u7ebf\u7a0b\uff0c\u4e0d\u6d89\u53ca\u7f51\u9875\u7248\u5bf9\u8bdd\u7ebf\u7a0b\u6a21\u578b\u5207\u6362",
+  "scope_note": "仅调整 Codex 线程，不涉及网页版对话线程模型切换",
   "principles": [
     "Cached Context Is Not Free Context",
     "Token Is a Signal, Not a Threshold",
