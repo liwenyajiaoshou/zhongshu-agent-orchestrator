@@ -437,3 +437,59 @@ Codex 完成全部离线工作
 ```
 
 如果已有卫兵 / TaskContract 明确授权，则优先复用，不新建 Execution Manager。
+
+---
+
+## 12. 详细能力矩阵
+
+| 能力 | 中枢负责什么 |
+| --- | --- |
+| Stage Management | 判断当前阶段与阶段切换是否成立 |
+| Task Planning | 生成最小充分施工方案 |
+| Report Review | 审计 Agent 的施工结果与边界遵守情况 |
+| Evidence | 区分 Agent 声明与可验证的机器证据 |
+| Model Routing | 选择最低充分模型与推理强度 |
+| Context Handoff | 在长线程稳定节点压缩与换线程 |
+| Workspace Awareness | 判断工作区是否适合继续施工 |
+| Execution Gating | 仅对真实高风险动作触发 Owner Gate |
+| Governance Integration | 与卫兵连接，但不复制卫兵能力 |
+
+---
+
+## 13. 设计原则
+
+### Minimum Sufficient Governance
+治理只做到足够，不为了形式继续加层。
+
+### Evidence over Claims
+Agent 说“完成”不等于真的完成；收口需要可核对的证据。
+
+### Smallest Next Step
+每次只规划当前最值得推进的一步，而不是重新规划整个项目。
+
+### Finish Local Value, Then Compress
+长线程先完成当前局部价值；一旦形成稳定结论，再压缩并评估换线程。
+
+### Execution Form Is Not Risk
+是否使用 Agent、CLI 或 PowerShell 不是风险本身；应根据真实副作用决定边界与 Owner Gate。
+
+---
+
+## 14. 任务交互时序图
+
+``mermaid
+sequenceDiagram
+    participant U as Owner
+    participant Z as ChatGPT + 中枢
+    participant A as Codex / Antigravity
+    participant G as 卫兵（可选）
+
+    U->>Z: 这是最新施工报告，检查并给下一步
+    Z->>Z: 核对阶段、Required Tests 与 Evidence
+    Z->>A: 生成最小施工方案
+    G-->>A: 约束 Git、Network、Data、Release
+    A->>A: 修改、测试、收口
+    A-->>Z: 施工报告 + Machine Evidence
+    Z->>Z: 判断 PASS、REPAIR 或 BLOCKED
+    Z-->>U: 当前结论 + 最小下一步
+``
