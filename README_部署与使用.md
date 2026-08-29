@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.2
+# 中枢 Runtime Deployment Pack V1.0
 
 ## 1. 这是什�?
 这是�?*网页�?ChatGPT 项目统筹线程**使用的运行时包�?
@@ -279,3 +279,31 @@ Codex 线程：继�?/ 更换
 ```
 
 只有在线程非常短、尚未实质施工时，才允许�?Codex 线程直接更换模型�?
+
+---
+
+## V1.3 新增：Codex 长线程上下文成本与最佳换线程�?只增强现�?Context Saturation / Codex Thread Handoff，不新增 Token 监控器、Context Manager、自动终止线程或 Token 硬阈值�?
+核心原则：Cached Context Is Not Free Context；Token Is a Signal, Not a Threshold；Finish Local Value, Then Compress�?
+当前局部任务价值高且历史噪声高时，不在修复中途硬切；先完�?PASS / OFFLINE_PASS，再立即压缩交接并新开 Codex 线程，模型可以保持不变�?
+
+---
+
+## V1.4 新增：Host 执行门与 Owner Gate 最小化
+
+核心原则�?
+```text
+Execution Form Is Not Risk
+Minimum Owner Gate
+Machine-Readable Handoff After Owner Action
+```
+
+不要因为命令�?PowerShell / Shell 就默认要�?Owner 手工执行�?
+典型流程�?
+```text
+Codex 完成全部离线工作
+�?只剩一次真实外部验�?�?Owner 执行唯一 hard-boundary command
+�?Owner 回复“已执行�?�?Codex 自动读取 result / audit
+�?继续判断
+```
+
+如果已有卫兵 / TaskContract 明确授权，则优先复用，不新建 Execution Manager�?

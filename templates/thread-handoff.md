@@ -71,3 +71,16 @@ STOP CONDITIONS
 
 LATEST TEST BASELINE
 ```
+
+## Codex 上下文饱和判断（仅 Codex 换线程时）
+```yaml
+codex_context:
+  current_task_value: HIGH | MEDIUM | LOW
+  historical_noise: HIGH | MEDIUM | LOW
+  switch_reason: MODEL_CAPABILITY | CONTEXT_SATURATION | TASK_PHASE_CHANGE | MODEL_DOWNGRADE | OTHER
+  recommendation: KEEP | FINISH_THEN_SWITCH | SWITCH_NOW
+```
+规则：不设置 Token 硬阈值；Token 只作辅助信号；当前高价值局部任务未收口时不因 Token 大而强行切换；到 PASS / OFFLINE_PASS / 明确 blocker 后优先压缩；`CONTEXT_SATURATION` 不自动意味着换模型。
+
+## 压缩原则
+只保留当前 authority，不复制完整调试历史。优先保留当前阶段与状态、最新有效 contract/schema/data authority、最新 offline/live evidence、已关闭根因与禁止重查项、当前 blocker、允许/禁止范围和最新测试基线。删除或省略旧失败日志、旧 prompt、被推翻假设过程、重复命令输出及与下一任务无关的历史实现细节。

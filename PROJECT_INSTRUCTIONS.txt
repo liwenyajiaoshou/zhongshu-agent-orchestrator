@@ -43,3 +43,13 @@
 14. 本条仅约束 Codex：Codex 线程默认保持模型稳定。任务复杂度上升时，若当前模型能力仍足够且 Codex 上下文高价值，优先提高推理等级，不直接更换模型。
 15. 本条仅约束 Codex：只有确认当前模型能力不足时才升级模型。若当前 Codex 线程已经有实质施工上下文，模型变化默认通过“压缩交接 → 新 Codex 线程”完成。
 16. 本条仅约束 Codex：上下文污染严重时，即使模型不变也可建议新开 Codex 线程；模型降级同样默认使用新 Codex 线程。原线程直接换模型仅允许在线程极短、尚未实质施工时。
+
+17. 本条仅约束 Codex：Cached Context Is Not Free Context。cached input 较高不能作为无限延长 Codex 线程的理由。
+18. 本条仅约束 Codex：Token Is a Signal, Not a Threshold。Token 量级只作为 Context Saturation 的辅助信号，不设置机械硬阈值。
+19. 本条仅约束 Codex：Finish Local Value, Then Compress。当前高价值局部任务仍依赖现有上下文时先完成局部收口；一旦形成 PASS / OFFLINE_PASS / 明确 blocker，立即评估压缩交接。
+20. 本条仅约束 Codex：Preserve Authority, Drop Debug History。新 Codex 线程优先继承 authority、已关闭事项、边界和最新测试基线，不继承完整调试历史；因 Context Saturation 换线程不等于必须换模型。
+
+21. Execution Form Is Not Risk：PowerShell、Shell、Python、CLI 只是执行形式，不是风险等级。应依据真实副作用、治理授权和执行环境判断由 Codex 还是 Owner 执行。
+22. Minimum Owner Gate：触碰硬边界时，只把 Codex 在现有权限或环境中无法安全完成的最小动作交给 Owner；Owner 完成后，结果读取、审计、hash、日志和后续判断尽量由 Codex 自动完成。
+23. Owner Action 应优先产出稳定 machine-readable artifacts；除非 artifact 缺失、Codex 无法读取 Host 文件或确有权限障碍，不要求 Owner 搬运日志。
+24. Host-specific capability 不等于必须人工；如果 Codex 环境具备能力且既有治理已经明确授权，可由 Codex 执行。

@@ -1,7 +1,7 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.2",
-  "stage": "S2.1",
+  "runtime_version": "V1.4",
+  "stage": "S2.3",
   "date": "2026-08-27",
   "upgrade_focus": [
     "重复失败换挡",
@@ -10,6 +10,21 @@
     "Codex 上下文饱和与压缩交接",
     "对话线程 / Codex 线程术语区分"
   ],
-  "latest_upgrade": "Codex 模型—推理—线程联合路由",
-  "scope_note": "仅调整 Codex 线程，不涉及网页版对话线程模型切换"
+  "latest_upgrade": "Host execution gating and minimum Owner Gate",
+  "scope_note": "仅调整 Codex 线程，不涉及网页版对话线程模型切换",
+  "principles": [
+    "Cached Context Is Not Free Context",
+    "Token Is a Signal, Not a Threshold",
+    "Finish Local Value, Then Compress",
+    "Preserve Authority, Drop Debug History",
+    "Execution Form Is Not Risk",
+    "Minimum Owner Gate",
+    "Machine-Readable Handoff After Owner Action"
+  ],
+  "non_goals": [
+    "Token monitor",
+    "Context Manager",
+    "hard token threshold",
+    "automatic thread termination"
+  ]
 }

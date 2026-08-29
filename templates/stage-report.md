@@ -43,3 +43,17 @@ release_actions:
 ## next
 
 - 
+
+
+## execution_gate
+
+```yaml
+owner_action:
+  required:
+  reason:
+  executed:
+  machine_readable_artifacts:
+  codex_post_action_readback:
+```
+
+如果 Owner 只执行了 hard-boundary action，后续 result / audit / hash / report 读取应由 Codex 自行完成；无法读取时明确记录能力限制。

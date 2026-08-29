@@ -68,16 +68,46 @@
 `离线复现 → fixture/mock/temp data → 本地闭环 → 回归 → 最少次数真实验证`
 
 ## Codex 上下文饱和
-出现大量旧失败路径、失效假设、重复补丁或重复调查已关闭问题时，优先新开 Codex 调试线程。
 
-压缩交接只保留：
-- CURRENT AUTHORITATIVE STATE
-- RESOLVED / DO NOT REOPEN
-- CURRENT BLOCKER
-- ALLOWED SCOPE
-- FORBIDDEN SCOPE
-- STOP CONDITIONS
-- LATEST TEST BASELINE
+本节只增强现有 Codex Thread Handoff；不建立新的 Token 监控平台、自动终止器或 Context Manager。
+
+### 四条原则
+1. **Cached Context Is Not Free Context**：缓存上下文可降低部分重复输入成本，但不能消除上下文污染、注意力竞争和 stale state 风险。
+2. **Token Is a Signal, Not a Threshold**：Token 量级只作为辅助信号，不设置机械硬阈值。
+3. **Finish Local Value, Then Compress**：当前高价值局部任务仍强依赖现有上下文时，优先完成该局部任务；一旦形成稳定 PASS / OFFLINE_PASS / 明确 blocker，立即评估压缩交接。
+4. **Preserve Authority, Drop Debug History**：新 Codex 线程继承当前 authority、关闭事项、边界和测试基线，不继承完整调试历史。
+
+### 价值 / 噪声判断
+```yaml
+codex_context:
+  current_task_value: HIGH | MEDIUM | LOW
+  historical_noise: HIGH | MEDIUM | LOW
+```
+```text
+HIGH value + LOW/MEDIUM noise → 保持当前线程
+HIGH value + HIGH noise → 完成当前局部任务 → 压缩交接 → 新 Codex 线程
+LOW value + HIGH noise → 优先立即换线程
+LOW value + LOW noise → 正常按任务规模判断
+```
+
+### Context Saturation Review 触发参考
+以下信号用于评估，不自动切线程：跨越多个 blocker、大量 `RESOLVED / DO NOT REOPEN`、多轮根因推翻、同一模块多次修补、cached input 很高、non-cached input 进入高负载区、重复调查已关闭问题、当前任务只依赖最近一小段上下文、后续任务性质变化。
+
+禁止“超过 X token 必须换线程”、因 cached input 高就无限延长线程、当前高价值修复未收口时仅因 Token 数字强行中断。
+
+### 最佳切换点
+`当前局部任务 → PASS / OFFLINE_PASS / 明确 blocker → machine evidence / report → 压缩成 authority → 新 Codex 线程`
+
+### 换线程不等于换模型
+```yaml
+switch_reason:
+  MODEL_CAPABILITY
+  CONTEXT_SATURATION
+  TASK_PHASE_CHANGE
+  MODEL_DOWNGRADE
+  OTHER
+```
+若 `switch_reason = CONTEXT_SATURATION` 且模型能力仍足够：新开 Codex 线程，但模型可以保持不变。
 
 ## Codex 模型 / 推理等级 / 线程联合路由
 

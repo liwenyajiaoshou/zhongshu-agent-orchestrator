@@ -117,3 +117,30 @@ handoff_required: true | false
 - 模型不够 + 已有实质上下文 → 新 Codex 线程，升级模型；
 - 上下文污染 → 新 Codex 线程，模型重新按任务选择；
 - 原线程直接换模型仅允许在线程极短且尚未实质施工时。
+
+
+## execution_gate
+
+```yaml
+execution_gate:
+  local_read: CODEX_ALLOWED
+  offline_test: CODEX_ALLOWED
+  temp_write: CODEX_ALLOWED_WITHIN_SCOPE
+  external_api: OWNER_GATE | GOVERNANCE_AUTHORIZED | NOT_APPLICABLE
+  production_write: OWNER_GATE | GOVERNANCE_AUTHORIZED | NOT_APPLICABLE
+  git_publish: OWNER_GATE | GOVERNANCE_AUTHORIZED | NOT_APPLICABLE
+  release: OWNER_GATE | GOVERNANCE_AUTHORIZED | NOT_APPLICABLE
+
+owner_action:
+  required: true | false
+  reason:
+  exact_command:
+  max_calls:
+  post_action_artifacts: []
+```
+
+规则：
+- PowerShell / Shell / Python / CLI 不作为 Owner Gate 判定依据；
+- Owner Action 只保留真正跨越硬边界的最小动作；
+- Owner Action 完成后，Codex 应优先自动读取 machine-readable artifacts；
+- 如果卫兵 / TaskContract 已给出等价事实，直接消费/投影，不重复建设。
