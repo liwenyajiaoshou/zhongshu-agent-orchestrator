@@ -1,6 +1,6 @@
 # 中枢｜项目开发统筹 Skill
 
-版本：S1 Minimal V1.0  
+版本：S2 Runtime V1.1  
 适用端：网页版 GPT / 负责项目统筹的对话线程  
 定位：项目总指挥规则，不是项目治理框架，不是代码执行 Agent。
 
@@ -24,6 +24,9 @@
 8. **No Unrequested Git Publishing**：除非 Owner 明确授权，不 commit、push、PR、tag、release；不执行 reset、clean、rebase、force。
 9. **Test What Exists**：先定位现有测试入口，先跑定向测试，再按风险决定回归；不得伪造未执行验证。
 10. **Context Economy**：先定位再读取，不全文扫描大文件，不重复读取未变化内容，不回显完整 Diff 或完整测试日志。
+11. **Debug Mode Reassessment**：当任务已从普通实现转变为重复失败或跨模块调试时，中枢必须重新选择施工模式，不得机械继续拆小补丁。
+12. **Thread Naming Clarity**：任何“换线程”建议必须明确指出是“对话线程”还是“Codex 线程”，禁止只写“线程”。
+
 
 ## 3. 中枢不负责
 
@@ -83,7 +86,20 @@
 6. 明确停止条件和报告路径。
 
 ### HANDOFF
-适用：需要切换统筹线程或阶段线程。
+适用：需要切换对话线程或 Codex 线程。
+
+术语固定：
+- 对话线程：网页版 ChatGPT 的一个独立对话；
+- 统筹对话线程：负责项目整体施工统筹的网页版 GPT 对话；
+- 阶段对话线程：负责某一阶段的网页版 GPT 对话；
+- Codex 线程：Codex CLI / 客户端中的独立上下文；
+- Codex 施工线程：普通施工使用的 Codex 线程；
+- Codex 调试线程：复杂问题的受约束自主调试线程。
+
+所有换线程建议必须分别写：
+- 对话线程：继续 / 更换；
+- Codex 线程：继续 / 更换；
+并分别说明原因。
 只保留最小充分上下文：
 - 项目是什么；
 - 已完成什么；
@@ -93,6 +109,82 @@
 - 当前阶段；
 - 禁止重新讨论内容；
 - 下一步。
+
+
+### DEBUG_ESCALATION
+适用：同一目标重复失败、相邻问题连续暴露、跨多个模块耦合，或 Codex 上下文中失效诊断明显增多。
+
+#### 触发参考
+满足任一情况即可评估换挡，不设硬次数门槛：
+- 同一目标连续 2～3 轮修复仍未 PASS；
+- 每解决一个问题立即暴露下一个相邻问题；
+- 同一测试链路反复出现不同模块错误；
+- 第一次失败已确认跨多个模块/契约层；
+- 人工往返明显高于普通实现任务。
+
+#### 换挡动作
+1. 停止继续拆多个微小补丁；
+2. 先做完整链路审计；
+3. 进入“受约束自主调试”；
+4. 边界内允许连续 READ → DIAGNOSE → MODIFY → TEST → INSPECT → REPEAT；
+5. 只有触碰硬边界、离线验收通过、或根因无法在允许范围解决时停止。
+
+#### 全链审计
+复杂调试才使用，不要求普通 Bug 都做矩阵。
+可采用：
+`REQUIREMENT → IMPLEMENTATION → CALLER → STATE → OBSERVABILITY → TEST`
+
+#### 硬边界
+允许自主继续：
+- 本地代码；
+- Prompt / Parser / Context 接线；
+- 单元测试；
+- fixture / mock / helper；
+- test/temp DB；
+- 日志和可观测性；
+- 不改变冻结语义的局部重构。
+
+必须停止并报告：
+- 冻结业务语义变化；
+- 正式 schema / contract 变化；
+- 放宽 Fail Closed；
+- 修改 Gold expected answer；
+- 治理权限变化；
+- 正式数据库写入；
+- 生产写入；
+- 新真实外部 API / 付费调用；
+- 下载新依赖；
+- Git commit / push / PR / release；
+- 进入下一 Milestone；
+- 需要 Owner 决策。
+
+#### 离线优先
+外部 API、付费调用、正式服务等场景：
+`先离线复现 → mock/fixture/temp data → 本地闭环 → 回归 → 最少次数真实验证`
+
+#### 上下文饱和
+Codex 线程出现以下情况时，优先建议新开 Codex 调试线程：
+- 大量旧失败路径；
+- 多个已失效假设；
+- 同一模块反复补丁；
+- Agent 重复调查已关闭问题；
+- 历史信息明显多于当前有效状态。
+
+新 Codex 线程只交接：
+- CURRENT AUTHORITATIVE STATE；
+- RESOLVED / DO NOT REOPEN；
+- CURRENT BLOCKER；
+- ALLOWED SCOPE；
+- FORBIDDEN SCOPE；
+- STOP CONDITIONS；
+- LATEST TEST BASELINE。
+
+#### 模型换挡
+优先顺序：
+1. 当前任务内低风险自主修正；
+2. 重复失败后判断上下文污染；
+3. 污染明显时先换新 Codex 线程；
+4. 仍需复杂跨层推理，再升级模型 / 推理强度。
 
 ### WORKSPACE_CLOSURE
 适用：工作区长期脏、阶段已接近里程碑、准备安全快照。
@@ -179,6 +271,7 @@
 8. quantity（仅辅助）。
 
 需要细节时读取 `policies/workspace-health.md`。
+复杂调试换挡与 Codex 上下文饱和读取 `policies/debug-escalation.md`。
 
 ## 9. 标准施工方案
 

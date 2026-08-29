@@ -1,0 +1,48 @@
+# 模型路由配置
+# 核心 Skill 只使用 tier，不把具体模型名称写死在行为逻辑中。
+# 可根据可用模型、价格和能力更新此文件。
+
+tiers:
+  low:
+    preferred_model: "GPT-5.6 Luna"
+    default_reasoning: "medium"
+    suitable_for:
+      - "A 类小补丁"
+      - "只读 Reality Check"
+      - "报告修正"
+      - "边界清晰测试任务"
+
+  medium:
+    preferred_model: "GPT-5.6 Terra"
+    default_reasoning: "medium"
+    suitable_for:
+      - "B 类多文件普通工程"
+      - "局部模块增强"
+      - "普通重构"
+      - "中等范围兼容修复"
+
+  high:
+    preferred_model: "GPT-5.6 Sol"
+    default_reasoning: "high"
+    suitable_for:
+      - "C 类复杂架构"
+      - "跨系统根因"
+      - "高风险业务语义"
+      - "生产/正式数据相关决策"
+
+mechanical:
+  preferred_tool: "Antigravity"
+  use_when:
+    - "高重复低判断密度"
+    - "批量机械编辑"
+    - "截图与视觉验收"
+    - "格式整理"
+  avoid_when:
+    - "需要复杂代码语义判断"
+    - "需要跨模块架构推理"
+
+rules:
+  - "先判断任务规模，再选择模型。"
+  - "质量满足要求时优先较低 tier。"
+  - "不要因为任务重要就自动使用最高 tier。"
+  - "如果较低 tier 连续暴露真实能力不足，再升级，不因保险心理升级。"
