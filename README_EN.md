@@ -6,7 +6,7 @@
 <h1 align="center">Zhongshu / 中枢</h1>
 
 <p align="center">
-  <strong>Keep long-running ChatGPT + Codex projects context-aware, verifiably complete, and always clear on what to do next.</strong>
+  <strong>Keep long-running ChatGPT + Codex projects context-aware, verify what actually got done, and always know what to do next.</strong>
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
   />
 </p>
 
-## What does Zhongshu solve?
+## What Zhongshu solves
 
 ### `01` Keep context across long-running projects
 
@@ -45,12 +45,12 @@ Zhongshu uses the real project state to propose the smallest worthwhile next ste
 
 ## How it works
 
-Zhongshu is a project-level orchestration layer: it judges stages, plans tasks, audits execution results, and hands over real risk boundaries to the optional Guardian governance layer.
+Zhongshu is a project-level orchestration layer: it judges stages, plans tasks, audits execution results, and delegates risk controls to the optional Guardian governance layer.
 
 ```mermaid
 flowchart TD
     U[Owner / User] --> P[ChatGPT Project]
-    P --> Z[Zhongshu<br/>Stage Judgement · Task Planning · Model/Thread Routing · Audit]
+    P --> Z[Zhongshu<br/>Stage Assessment · Task Planning · Model & Thread Decisions · Execution Audit]
 
     Z --> PLAN[Stage Plan]
     PLAN --> A[Codex / Antigravity]
@@ -76,7 +76,7 @@ After Codex finishes a run, you hand the report to Zhongshu:
 
 ## 5-minute quick start
 
-No Git, Python, GitHub CLI, or Guardian required. You only need a ChatGPT Project, and if local code execution is needed, attach Codex / Antigravity.
+No Git, Python, GitHub CLI, or Guardian required. You only need a ChatGPT Project. For local code execution, use Codex / Antigravity.
 
 1. Download the **Latest Runtime Pack** (ZIP) from the [Latest Release](../../releases/latest).
 2. Extract the ZIP file.
@@ -120,14 +120,14 @@ Context Retention · Execution Audit · Minimum Next Step · Risk Boundaries
 
 ### Zhongshu vs Guardian
 
-Zhongshu decides "what to do now"; Guardian is an optional enhancement that restrains "how the agent can do it".
+Zhongshu decides "what to do now"; Guardian is an optional enhancement that sets limits on how the agent operates.
 
 [View full explanation (Chinese) →](README_部署与使用.md#6-与卫兵的关系)
 
 ### Documentation
 
 - [Full deployment & usage guide (Chinese)](README_部署与使用.md)
-- [5-minute deployment (Chinese)](START_HERE.md)
+- [5-minute setup (Chinese)](START_HERE.md)
 - [Core Runtime (Chinese)](SKILL.md)
 - [Release Governance (Chinese)](RELEASE_GOVERNANCE.md)
 - [CHANGELOG (Chinese)](CHANGELOG.md)
@@ -136,7 +136,7 @@ Zhongshu decides "what to do now"; Guardian is an optional enhancement that rest
 <summary><strong>Scope / Design Principles</strong></summary>
 
 **Scope:**
-Zhongshu is not a Coding Agent, IDE, auto code generator, CI/CD platform, or Guardian replacement. It primarily orchestrates long-term software development for ChatGPT Project + Codex / Antigravity. Zhongshu can be used independently; Guardian is an optional field governance enhancement.
+Zhongshu is not a Coding Agent, IDE, auto code generator, CI/CD platform, or Guardian replacement. It primarily orchestrates long-term software development for ChatGPT Project + Codex / Antigravity. Zhongshu can be used independently; Guardian is an optional execution-governance layer.
 
 **Design Principles:**
 - Minimum Sufficient Governance: Only add governance that truly reduces risk.
