@@ -2,3 +2,5 @@
 .release-staging/
 .privacy-audit-temp/
 .v*-staging/
+
+dist/

@@ -15,18 +15,25 @@
 未来每个版本发布流程必须显式执行以下步骤：
 1. Create annotated tag
 2. Push tag
-3. Create GitHub Release
-4. Verify GitHub Release object
+3. Build Runtime Pack from MANIFEST
+4. Create GitHub Release
+5. Upload Runtime Pack ZIP
+6. Verify GitHub Release object
+7. Verify Release asset
 
 缺少任一步骤，发布状态不得为 PASS。
 
-每个版本发布后，必须使用 `gh release view <TARGET_VERSION>`（或等价 API）进行验证，确保：
+每个版本发布后，必须使用 `gh release view <TARGET_VERSION> --json tagName,isDraft,isPrerelease,publishedAt,assets`（或等价 API）进行验证，确保：
 - tagName = TARGET_VERSION
 - isDraft = false
 - isPrerelease = false
 - publishedAt != null
+- assets 中存在当前版本的 `Zhongshu_Runtime_Deployment_Pack_<VERSION>.zip`
 
 并在 `gh release list --limit 20` 中确认目标版本真实出现。
+
+如果 Tag + Release 存在，但 Runtime ZIP Asset 缺失，状态应为 `PARTIAL_PUBLISH`。
+注：Runtime Pack asset 强制校验要求自引入本规则后的下一个发布版本起生效（不回溯要求 v1.0.0-v1.4.0 补齐自定义 ZIP Asset）。
 
 ## 3. 禁止弱证据验证
 

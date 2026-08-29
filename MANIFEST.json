@@ -26,5 +26,17 @@
     "Context Manager",
     "hard token threshold",
     "automatic thread termination"
+  ],
+  "deployment_files": [
+    "SKILL.md",
+    "PROJECT_INSTRUCTIONS.txt",
+    "policies/model-routing.yaml",
+    "policies/governance-adapter.md",
+    "policies/workspace-health.md",
+    "policies/debug-escalation.md",
+    "policies/execution-gating.md",
+    "templates/stage-plan.md",
+    "templates/stage-report.md",
+    "templates/thread-handoff.md"
   ]
 }

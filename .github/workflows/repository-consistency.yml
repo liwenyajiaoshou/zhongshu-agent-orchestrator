@@ -19,3 +19,6 @@ jobs:
 
     - name: Run Repository Validator
       run: python scripts/validate_repository.py
+
+    - name: Run Runtime Pack Builder
+      run: python scripts/build_runtime_pack.py
