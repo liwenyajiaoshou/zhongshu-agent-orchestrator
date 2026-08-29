@@ -9,6 +9,9 @@
 - `multi_agent`: false / true
 - `对话线程`: 继续 / 更换
 - `Codex 线程`: 继续 / 更换
+- `Codex 模型动作`: 保持 / 升级 / 降级
+- `推理等级动作`: 保持 / 提高 / 降低
+- `模型切换方式`: 不适用 / 原线程低上下文切换 / 新 Codex 线程压缩交接
 - `TUN`: on / off / unchanged
 - `write_mode`: read-only / writable
 
@@ -91,3 +94,26 @@ full_chain_audit_required: false
 offline_first: true
 validation_state: UNVERIFIED | OFFLINE_PASS | LIVE_VALIDATION_REQUIRED | LIVE_VALIDATION_PASS
 ```
+
+
+## Codex 换挡判定
+
+当推荐调整模型或推理等级时，必须说明：
+
+```yaml
+codex_context_quality: HIGH | MEDIUM | LOW
+current_model_capability: SUFFICIENT | INSUFFICIENT | UNCERTAIN
+reasoning_budget: SUFFICIENT | INSUFFICIENT | UNCERTAIN
+decision:
+  keep_thread: true | false
+  keep_model: true | false
+  change_reasoning: KEEP | INCREASE | DECREASE
+  target_model_tier:
+handoff_required: true | false
+```
+
+默认规则：
+- 模型够 + 上下文高价值 → 原 Codex 线程，提高推理等级；
+- 模型不够 + 已有实质上下文 → 新 Codex 线程，升级模型；
+- 上下文污染 → 新 Codex 线程，模型重新按任务选择；
+- 原线程直接换模型仅允许在线程极短且尚未实质施工时。
