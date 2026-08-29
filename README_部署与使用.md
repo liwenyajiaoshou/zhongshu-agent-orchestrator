@@ -48,6 +48,8 @@ SKILL.md
 policies/
 ├── model-routing.yaml
 ├── governance-adapter.md
+├── debug-escalation.md
+├── execution-gating.md
 └── workspace-health.md
 
 templates/
