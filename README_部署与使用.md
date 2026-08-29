@@ -477,7 +477,7 @@ Agent 说“完成”不等于真的完成；收口需要可核对的证据。
 
 ## 14. 任务交互时序图
 
-``mermaid
+```mermaid
 sequenceDiagram
     participant U as Owner
     participant Z as ChatGPT + 中枢
@@ -492,4 +492,4 @@ sequenceDiagram
     A-->>Z: 施工报告 + Machine Evidence
     Z->>Z: 判断 PASS、REPAIR 或 BLOCKED
     Z-->>U: 当前结论 + 最小下一步
-``
+```

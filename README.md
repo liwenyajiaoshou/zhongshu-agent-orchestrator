@@ -1,4 +1,4 @@
-﻿# Zhongshu / 中枢
+# Zhongshu / 中枢
 
 [![Latest release](https://img.shields.io/github/v/release/liwenyajiaoshou/zhongshu-agent-orchestrator?display_name=tag&label=release)](../../releases/latest)
 [![Repository consistency](https://github.com/liwenyajiaoshou/zhongshu-agent-orchestrator/actions/workflows/repository-consistency.yml/badge.svg)](../../actions/workflows/repository-consistency.yml)
@@ -34,7 +34,7 @@
 
 中枢是项目级的编排层：它判断阶段、规划工作、审计施工结果，并将真实风险边界交给可选的卫兵治理层。
 
-``mermaid
+```mermaid
 flowchart TD
     U[Owner / 用户] --> P[ChatGPT Project]
     P --> Z[中枢<br/>阶段判断 · 任务规划 · 模型/线程决策 · 施工审计]
@@ -51,7 +51,7 @@ flowchart TD
     R -->|PASS| N[进入下一阶段]
     R -->|REPAIR| PLAN
     R -->|BLOCKED| U
-``
+```
 
 ### 更多统筹价值
 
@@ -84,7 +84,7 @@ Codex 完成一轮施工后，你只需要把报告交给中枢：
 6. 发送以下安装自检提示词。
 7. 收到 ZHONGSHU_RUNTIME_READY 即部署完成。
 
-`	ext
+```text
 检查中枢是否部署完整。
 
 请只检查当前 Project 已提供的中枢 Runtime：
@@ -98,22 +98,22 @@ Codex 完成一轮施工后，你只需要把报告交给中枢：
 ZHONGSHU_RUNTIME_READY
 
 并告诉我下一步如何启动一个新项目。
-`
+```
 
 ## 适合谁？
 
 **适合：**
 
-✓ 使用 ChatGPT + Codex / Agent 做持续多轮的软件项目
-✓ 项目会经历多个阶段、线程或施工循环
-✓ 需要判断 Agent 到底有没有真的完成
-✓ 经常需要把施工结果转化成下一步计划
+- ✓ 使用 ChatGPT + Codex / Agent 做持续多轮的软件项目
+- ✓ 项目会经历多个阶段、线程或施工循环
+- ✓ 需要判断 Agent 到底有没有真的完成
+- ✓ 经常需要把施工结果转化成下一步计划
 
 **可能不需要：**
 
-✗ 一次对话即可完成的小脚本
-✗ 单文件简单修改
-✗ 不需要长期上下文或 Agent 施工审计
+- ✗ 一次对话即可完成的小脚本
+- ✗ 单文件简单修改
+- ✗ 不需要长期上下文或 Agent 施工审计
 
 ## 更多能力
 
