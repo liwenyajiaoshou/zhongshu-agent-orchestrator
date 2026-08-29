@@ -1,26 +1,25 @@
-# Zhongshu / 中枢
+<p align="right">
+  <strong>Language:</strong>
+  简体中文 · <a href="README_EN.md">English</a>
+</p>
 
-[![Latest release](https://img.shields.io/github/v/release/liwenyajiaoshou/zhongshu-agent-orchestrator?display_name=tag&label=release)](../../releases/latest)
-[![Repository consistency](https://github.com/liwenyajiaoshou/zhongshu-agent-orchestrator/actions/workflows/repository-consistency.yml/badge.svg)](../../actions/workflows/repository-consistency.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Runtime](https://img.shields.io/badge/runtime-V1.4-0b7285)](MANIFEST.json)
+<h1 align="center">Zhongshu / 中枢</h1>
 
-让 ChatGPT + Codex 在长期软件项目里保持上下文、验证真实完成，并持续知道下一步该做什么。
+<p align="center">
+  <strong>让 ChatGPT + Codex 在长期软件项目里保持上下文、验证真实完成，并持续知道下一步该做什么。</strong>
+</p>
 
-中枢不是 Coding Agent。
-它是长期 AI 软件开发中的项目统筹与审计层。
+<p align="center">
+  长期 AI 软件开发的项目统筹与审计层
+</p>
 
-## 中枢解决什么？
+<p align="center">
+  <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/liwenyajiaoshou/zhongshu-agent-orchestrator?display_name=tag&label=release" alt="Latest release"></a>
+  <a href="../../actions/workflows/repository-consistency.yml"><img src="https://github.com/liwenyajiaoshou/zhongshu-agent-orchestrator/actions/workflows/repository-consistency.yml/badge.svg" alt="Repository consistency"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+</p>
 
-| 核心问题 | 中枢怎么处理 | 用户得到什么 |
-|---|---|---|
-| 项目做久后上下文断裂 | 维护阶段、状态和交接 | 新线程继续推进 |
-| Agent 自报完成 | 检查报告、测试和证据 | PASS / REPAIR / BLOCKED |
-| 不知道下一步 | 基于当前状态生成最小下一步 | 不重复规划整个项目 |
-
-中枢遵循“最低充分治理”：只增加真正能降低风险或提高推进质量的治理。
-
-**[5 分钟开始](#5-分钟开始)** · **[Latest Release](../../releases/latest)** · **[完整文档](#更多文档)**
+**[5 分钟开始](#5-分钟开始)** · **[Latest Release](../../releases/latest)** · **[完整文档](#更多)**
 
 <p align="center">
   <img
@@ -29,6 +28,20 @@
     width="100%"
   />
 </p>
+
+## 中枢解决什么？
+
+### `01` 长项目上下文不断线
+
+项目跨阶段、跨线程推进后，中枢持续维护当前状态和交接信息，让新线程能够接着做。
+
+### `02` Agent 的“完成”可以验证
+
+中枢检查施工报告、测试结果和机器证据，判断当前任务是 **PASS / REPAIR / BLOCKED**。
+
+### `03` 每轮都有明确下一步
+
+中枢根据当前真实状态，只给出最值得推进的下一步，而不是每次重新规划整个项目。
 
 ## 它怎么工作？
 
@@ -53,24 +66,13 @@ flowchart TD
     R -->|BLOCKED| U
 ```
 
-### 更多统筹价值
+### 实际使用很简单
 
-| 常见 Agent 开发痛点 | 使用中枢后 |
-| --- | --- |
-| 小问题频繁等待 Owner | 边界内低风险问题连续闭环 |
-| 长线程不断累积噪声 | 在稳定节点压缩并判断是否换线程 |
-| 模型选择全靠经验 | 自动推荐最低充分模型与推理强度 |
-| 边界模糊 | 依据真实副作用明确 Owner Gate |
-
-## 一个真实使用方式
-
-Codex 完成一轮施工后，你只需要把报告交给中枢：
+Codex 完成一轮施工后，把报告交给中枢：
 
 > “这是最新施工报告，请检查是否真正完成，并告诉我下一步。”
 
-中枢会：
-
-报告 → 测试 / 机器证据 → PASS / REPAIR / BLOCKED → 下一步施工方案
+**报告 → 测试 / 证据 → PASS / REPAIR / BLOCKED → 下一步**
 
 ## 5 分钟开始
 
@@ -78,11 +80,11 @@ Codex 完成一轮施工后，你只需要把报告交给中枢：
 
 1. 从 [Latest Release](../../releases/latest) 下载 **Latest Runtime Pack**（ZIP）。
 2. 解压 ZIP 文件。
-3. 打开解压目录中的 project-upload/。
-4. 将 project-upload/ 的全部文件上传到 ChatGPT Project 的 Project Sources。
-5. 打开 PROJECT_INSTRUCTIONS.txt，将全文复制到 ChatGPT Project 的 Project Instructions。
+3. 打开解压目录中的 `project-upload/`。
+4. 将 `project-upload/` 的全部文件上传到 ChatGPT Project 的 Project Sources。
+5. 打开 `PROJECT_INSTRUCTIONS.txt`，将全文复制到 ChatGPT Project 的 Project Instructions。
 6. 发送以下安装自检提示词。
-7. 收到 ZHONGSHU_RUNTIME_READY 即部署完成。
+7. 收到 `ZHONGSHU_RUNTIME_READY` 即部署完成。
 
 ```text
 检查中枢是否部署完整。
@@ -102,57 +104,46 @@ ZHONGSHU_RUNTIME_READY
 
 ## 适合谁？
 
-**适合：**
-
-- ✓ 使用 ChatGPT + Codex / Agent 做持续多轮的软件项目
-- ✓ 项目会经历多个阶段、线程或施工循环
-- ✓ 需要判断 Agent 到底有没有真的完成
-- ✓ 经常需要把施工结果转化成下一步计划
-
-**可能不需要：**
-
-- ✗ 一次对话即可完成的小脚本
-- ✗ 单文件简单修改
-- ✗ 不需要长期上下文或 Agent 施工审计
-
-## 更多能力
-
-| 中枢主要做什么 | 用户得到什么 |
+| 适合 | 可能不需要 |
 |---|---|
-| 保持项目上下文 | 新线程可以继续做 |
-| 审计 Agent 结果 | 知道是不是真的完成 |
-| 判断最小下一步 | 不再每轮重新规划 |
-| 控制必要风险边界 | 危险操作才需要停下来确认 |
+| ✓ 持续多轮的软件项目 | ✗ 一次对话即可完成的小脚本 |
+| ✓ 多阶段 / 多线程 Agent | ✗ 单文件简单修改 |
+| ✓ 需要验证 Agent 是否真的完成 | ✗ 不需要长期上下文 / Agent 审计 |
+
+## 更多
+
+### 更多能力
+
+保持上下文 · 施工审计 · 最小下一步 · 必要风险边界
 
 [查看完整能力说明 →](README_部署与使用.md#12-详细能力矩阵)
 
-## 中枢与卫兵
+### 中枢与卫兵
 
 中枢负责“现在该做什么”；卫兵是可选增强，负责约束 Agent“可以怎么做”。
 
 [查看完整说明 →](README_部署与使用.md#6-与卫兵的关系)
 
-## 更多文档
+### Documentation
 
 - [5 分钟部署](START_HERE.md)
 - [完整部署与使用](README_部署与使用.md)
-- [中枢与卫兵](README_部署与使用.md#6-与卫兵的关系)
 - [核心 Runtime](SKILL.md)
 - [Release Governance](RELEASE_GOVERNANCE.md)
 - [CHANGELOG](CHANGELOG.md)
 
-## 当前边界
+<details>
+<summary><strong>边界 / 设计原则摘要</strong></summary>
 
-中枢不是：
+**当前边界：**
+中枢不是 Coding Agent、IDE、自动代码生成器、CI/CD 平台或卫兵的替代品。当前主要服务于 ChatGPT Project + Codex / Antigravity 的长期软件开发统筹。中枢保持可独立使用；卫兵是可选的现场治理增强。
 
-- Coding Agent；
-- IDE；
-- 自动代码生成器；
-- CI/CD 平台；
-- 卫兵的替代品。
+**设计原则：**
+- Minimum Sufficient Governance：治理只做到足够。
+- Evidence over Claims：收口需要可核对的证据。
+- Smallest Next Step：每次只规划当前最值得推进的一步。
+- Finish Local Value, Then Compress：长线程先完成当前局部价值再压缩。
+- Execution Form Is Not Risk：应根据真实副作用决定边界。
+</details>
 
-当前主要服务于 ChatGPT Project + Codex / Antigravity 的长期软件开发统筹。中枢保持可独立使用；卫兵是可选的现场治理增强。
-
-## License
-
-本项目采用 [MIT License](LICENSE)。
+Licensed under the [MIT License](LICENSE).
