@@ -16,23 +16,27 @@ FORBIDDEN_ROOT_FILES = [
     "thread-handoff.md"
 ]
 
-def get_manifest_deployment_files():
+def get_manifest_project_files():
     manifest_path = Path("MANIFEST.json")
     if not manifest_path.exists():
-        return []
+        return [], None
     try:
         content = manifest_path.read_text(encoding='utf-8')
         data = json.loads(content)
-        return data.get("deployment_files", [])
+        sources = data.get("project_source_files", [])
+        instructions = data.get("project_instructions_file", None)
+        return sources, instructions
     except Exception:
-        return []
+        return [], None
 
 def check_required_files():
     errors = []
-    required = get_manifest_deployment_files()
-    # Also strictly require some maintenance files not in deployment_files
-    always_required = ["MANIFEST.json", "CHANGELOG.md", "RELEASE_GOVERNANCE.md"]
-    for f in required + always_required:
+    sources, instructions = get_manifest_project_files()
+    if instructions:
+        sources.append(instructions)
+
+    always_required = ["MANIFEST.json", "CHANGELOG.md", "RELEASE_GOVERNANCE.md", "START_HERE.md"]
+    for f in sources + always_required:
         if not Path(f).is_file():
             errors.append(f"Missing required file: {f}")
     return errors
@@ -55,8 +59,10 @@ def check_manifest():
         data = json.loads(content)
         if not data.get("runtime_version"):
             errors.append("MANIFEST.json is missing 'runtime_version' field or it is empty.")
-        if "deployment_files" not in data or not isinstance(data["deployment_files"], list):
-            errors.append("MANIFEST.json is missing 'deployment_files' list.")
+        if "project_source_files" not in data or not isinstance(data["project_source_files"], list):
+            errors.append("MANIFEST.json is missing 'project_source_files' list.")
+        if "project_instructions_file" not in data or not isinstance(data["project_instructions_file"], str):
+            errors.append("MANIFEST.json is missing 'project_instructions_file' string.")
     except UnicodeDecodeError:
         errors.append("MANIFEST.json is not valid UTF-8.")
     except json.JSONDecodeError:
@@ -97,24 +103,40 @@ def check_utf8():
 
 def check_readme_inclusions():
     errors = []
-    deployment_files = get_manifest_deployment_files()
-    if not deployment_files:
-        return errors # Handled by manifest check
 
-    for readme_file in ["README.md", "README_部署与使用.md"]:
-        path = Path(readme_file)
-        if not path.exists():
-            errors.append(f"Missing {readme_file}")
-            continue
+    # Check README.md Quick Start concepts
+    readme_path = Path("README.md")
+    if readme_path.exists():
         try:
-            content = path.read_text(encoding='utf-8')
-            for exp in deployment_files:
-                basename = Path(exp).name
-                # Check for either the relative path or the basename
-                if exp not in content and basename not in content:
-                    errors.append(f"{readme_file} is missing expected reference to runtime file: {exp}")
+            content = readme_path.read_text(encoding='utf-8')
+            required_concepts = [
+                "Latest Runtime Pack",
+                "project-upload",
+                "PROJECT_INSTRUCTIONS.txt",
+                "ZHONGSHU_RUNTIME_READY"
+            ]
+            for concept in required_concepts:
+                if concept not in content:
+                    errors.append(f"README.md is missing required concept: {concept}")
         except Exception as e:
-            errors.append(f"Failed to read {readme_file}: {str(e)}")
+            errors.append(f"Failed to read README.md: {str(e)}")
+
+    # Check START_HERE.md concepts
+    starthere_path = Path("START_HERE.md")
+    if starthere_path.exists():
+        try:
+            content = starthere_path.read_text(encoding='utf-8')
+            required_concepts = [
+                "project-upload",
+                "PROJECT_INSTRUCTIONS.txt",
+                "ZHONGSHU_RUNTIME_READY"
+            ]
+            for concept in required_concepts:
+                if concept not in content:
+                    errors.append(f"START_HERE.md is missing required concept: {concept}")
+        except Exception as e:
+            errors.append(f"Failed to read START_HERE.md: {str(e)}")
+
     return errors
 
 def main():

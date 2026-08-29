@@ -23,16 +23,26 @@
 
 缺少任一步骤，发布状态不得为 PASS。
 
-每个版本发布后，必须使用 `gh release view <TARGET_VERSION> --json tagName,isDraft,isPrerelease,publishedAt,assets`（或等价 API）进行验证，确保：
+从下一正式版本开始，Release Asset 必须是：
+`Zhongshu_Runtime_Deployment_Pack_<VERSION>.zip`
+
+并且必须满足压缩包内包含：
+- `START_HERE.md`
+- `PROJECT_INSTRUCTIONS.txt`
+- `project-upload/` 目录
+
+正式发布后，必须使用：
+`gh release view <TARGET_VERSION> --json tagName,isDraft,isPrerelease,publishedAt,assets`
+（或等价 API）进行验证，确保：
 - tagName = TARGET_VERSION
 - isDraft = false
 - isPrerelease = false
 - publishedAt != null
-- assets 中存在当前版本的 `Zhongshu_Runtime_Deployment_Pack_<VERSION>.zip`
+- assets 中确切存在当前版本的 `Zhongshu_Runtime_Deployment_Pack_<VERSION>.zip`
 
 并在 `gh release list --limit 20` 中确认目标版本真实出现。
 
-如果 Tag + Release 存在，但 Runtime ZIP Asset 缺失，状态应为 `PARTIAL_PUBLISH`。
+如果 Tag + Release 存在，但 Runtime ZIP Asset 缺失，状态应为 `PARTIAL_PUBLISH`。不能 PASS。
 注：Runtime Pack asset 强制校验要求自引入本规则后的下一个发布版本起生效（不回溯要求 v1.0.0-v1.4.0 补齐自定义 ZIP Asset）。
 
 ## 3. 禁止弱证据验证
@@ -53,7 +63,7 @@
 ## 5. 发布状态标准化
 
 - **PASS**：commit + tag + push + Release object + post-release verification 全部完成。
-- **PARTIAL_PUBLISH**：部分完成（例如 Tag 已 push，但 Release 对象未创建）。此时只允许补齐 Release，不回滚 Tag，不 force push。
+- **PARTIAL_PUBLISH**：部分完成（例如 Tag 已 push，但 Release 对象未创建，或 Asset 缺失）。此时只允许补齐 Release 或上传 Asset，不回滚 Tag，不 force push。
 - **STOPPED**：发现异常需要人工介入，例如远端未知漂移、权限问题、Tag 冲突等。
 - **FAIL_CLOSED**：出现致命问题，例如版本源无法验证、发现 Secret 泄漏、需要历史重写等。
 

@@ -17,7 +17,8 @@ def main():
         content = manifest_path.read_text(encoding='utf-8')
         data = json.loads(content)
         version = data.get("runtime_version")
-        deployment_files = data.get("deployment_files")
+        project_source_files = data.get("project_source_files")
+        project_instructions_file = data.get("project_instructions_file")
     except Exception as e:
         print(f"Error parsing MANIFEST.json: {e}")
         sys.exit(1)
@@ -30,26 +31,38 @@ def main():
         print(f"Error: 'runtime_version' ({version}) does not match required format (e.g., V1.4, V1.4.1)")
         sys.exit(1)
 
-    if not isinstance(deployment_files, list):
-        print("Error: 'deployment_files' is missing or not a list in MANIFEST.json")
+    if not isinstance(project_source_files, list) or not project_source_files:
+        print("Error: 'project_source_files' is missing, not a list, or empty in MANIFEST.json")
+        sys.exit(1)
+
+    if not isinstance(project_instructions_file, str) or not project_instructions_file.strip():
+        print("Error: 'project_instructions_file' is missing or not a string in MANIFEST.json")
         sys.exit(1)
 
     # Manifest Validations
-    seen = set()
+    seen_paths = set()
+    seen_basenames = set()
     repo_root = Path.cwd().resolve()
 
-    for f in deployment_files:
+    for f in project_source_files:
         if not isinstance(f, str) or not f.strip():
-            print(f"Error: deployment_files contains non-string or empty item: {f}")
+            print(f"Error: project_source_files contains non-string or empty item: {f}")
             sys.exit(1)
-        if f in seen:
-            print(f"Error: deployment_files contains duplicate entry: {f}")
+        if f in seen_paths:
+            print(f"Error: project_source_files contains duplicate entry: {f}")
             sys.exit(1)
-        seen.add(f)
+        seen_paths.add(f)
 
-    package_files = list(deployment_files)
-    if "MANIFEST.json" not in package_files:
-        package_files.append("MANIFEST.json")
+        basename = Path(f).name
+        if basename in seen_basenames:
+            print(f"Error: FAIL_CLOSED project_source_files contains conflicting basenames: {basename}")
+            sys.exit(1)
+        seen_basenames.add(basename)
+
+    package_files = list(project_source_files)
+    package_files.append(project_instructions_file)
+    if "START_HERE.md" not in package_files:
+        package_files.append("START_HERE.md")
 
     # Security Validations
     for f in package_files:
@@ -84,10 +97,16 @@ def main():
 
     print(f"Building {temp_zip_filename}...")
 
+    expected_zip_files = set()
     try:
         with zipfile.ZipFile(temp_zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
             for file in package_files:
-                zipf.write(file, arcname=file)
+                if file in project_source_files:
+                    arcname = f"project-upload/{Path(file).name}"
+                else:
+                    arcname = Path(file).name
+                zipf.write(file, arcname=arcname)
+                expected_zip_files.add(arcname)
     except Exception as e:
         print(f"Error creating ZIP file: {e}")
         if temp_zip_filename.exists():
@@ -100,10 +119,9 @@ def main():
     try:
         with zipfile.ZipFile(temp_zip_filename, 'r') as zipf:
             zip_files = set(zipf.namelist())
-            expected_files = set(package_files)
 
-            if zip_files != expected_files:
-                verify_error = f"ZIP contents do not match deployment_files exactly.\nExpected: {expected_files}\nFound: {zip_files}"
+            if zip_files != expected_zip_files:
+                verify_error = f"ZIP contents do not match expected exactly.\nExpected: {expected_zip_files}\nFound: {zip_files}"
 
             if not verify_error:
                 for zf in zip_files:
