@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.0
+# 中枢 Runtime Deployment Pack V1.1
 
 ## 1. 这是什么
 
@@ -48,7 +48,8 @@ SKILL.md
 policies/
 ├── model-routing.yaml
 ├── governance-adapter.md
-└── workspace-health.md
+├── workspace-health.md
+└── debug-escalation.md
 
 templates/
 ├── stage-plan.md
@@ -298,7 +299,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.0 Runtime 不做：
+V1.1 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；

@@ -7,6 +7,8 @@
 - `recommended_model_tier`:
 - `reasoning_level`:
 - `multi_agent`: false / true
+- `对话线程`: 继续 / 更换
+- `Codex 线程`: 继续 / 更换
 - `TUN`: on / off / unchanged
 - `write_mode`: read-only / writable
 
@@ -76,3 +78,16 @@
 `{{REPORT_PATH}}`
 
 报告保持精简，不回显完整 Diff 或完整测试日志。
+
+
+## debug_escalation
+
+仅复杂调试时填写：
+
+```yaml
+mode: NORMAL | REPEATED_FAILURE_REVIEW | BOUNDED_AUTONOMOUS_DEBUG
+trigger_reasons: []
+full_chain_audit_required: false
+offline_first: true
+validation_state: UNVERIFIED | OFFLINE_PASS | LIVE_VALIDATION_REQUIRED | LIVE_VALIDATION_PASS
+```

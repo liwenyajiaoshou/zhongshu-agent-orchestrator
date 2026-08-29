@@ -1,4 +1,4 @@
-# {{PROJECT}}｜线程交接
+# {{PROJECT}}｜对话线程 / Codex 线程交接
 
 ## 项目
 
@@ -43,3 +43,31 @@
 ## 新线程启动要求
 
 先读取上述权威文件，先定位后读取；不要要求 Owner 重复完整历史；若当前设备无法访问真实仓库，明确能力边界，不伪造 Reality Check。
+
+
+## 线程建议
+
+```text
+对话线程：继续 / 更换
+Codex 线程：继续 / 更换
+```
+
+如更换 Codex 线程，明确是“Codex 施工线程”还是“Codex 调试线程”。
+
+## Codex 上下文压缩（仅换 Codex 线程时）
+
+```text
+CURRENT AUTHORITATIVE STATE
+
+RESOLVED / DO NOT REOPEN
+
+CURRENT BLOCKER
+
+ALLOWED SCOPE
+
+FORBIDDEN SCOPE
+
+STOP CONDITIONS
+
+LATEST TEST BASELINE
+```

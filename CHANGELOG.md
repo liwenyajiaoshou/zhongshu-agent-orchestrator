@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.0 - 2026-08-29
+
+- Restored V1.1 policy and template files to their canonical `policies/` and `templates/` paths.
+- Added constrained autonomous debugging, repeated-failure escalation, and Codex context-handoff guidance.
+- Updated deployment documentation to identify the current Runtime as V1.1.
+- Added the V1.1 runtime manifest metadata.
+
 ## v1.0.0
 
 - Initial public release of Zhongshu.
