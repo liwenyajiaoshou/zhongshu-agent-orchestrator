@@ -49,7 +49,8 @@ policies/
 ├── model-routing.yaml
 ├── governance-adapter.md
 ├── workspace-health.md
-└── debug-escalation.md
+  ├── debug-escalation.md
+  └── execution-gating.md
 
 templates/
 ├── stage-plan.md

@@ -403,7 +403,7 @@ Codex 上下文是否健康且高价值？
 
 ---
 
-## V1.3 新增：Codex 长线程上下文成本与最佳换线程点
+## S2.2｜Codex 长线程上下文成本与最佳换线程点（原计划作为 V1.3，最终随 V1.4 正式发布）
 只增强现有 Context Saturation / Codex Thread Handoff，不新增 Token 监控器、Context Manager、自动终止线程或 Token 硬阈值。
 
 核心原则：Cached Context Is Not Free Context；Token Is a Signal, Not a Threshold；Finish Local Value, Then Compress。

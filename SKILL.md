@@ -34,7 +34,7 @@
 18. **Minimum Owner Gate**：达到硬边界时，只把 Agent 在现有权限或环境中无法安全完成的最小动作交给 Owner；Owner 完成后，结果读取、审计和后续判断应尽量由 Codex 自动完成。
 19. **Machine-Readable Handoff After Owner Action**：需要 Owner 执行的动作应优先产出稳定、机器可读的 result / audit / report artifact，避免 Owner 搬运日志。
 
-17. **Preserve Authority, Drop Debug History**：新 Codex 线程继承当前 authority、已关闭事项、边界与最新测试基线，不继承完整调试历史。
+20. **Preserve Authority, Drop Debug History**：新 Codex 线程继承当前 authority、已关闭事项、边界与最新测试基线，不继承完整调试历史。
 
 
 
@@ -425,7 +425,7 @@ Codex 完成边界内全部工作
 
 如果卫兵 / TaskContract 已提供等价授权与边界事实，中枢只消费/投影，不新建 Execution Manager。
 
-## 9. 标准施工方案
+## 10. 标准施工方案
 
 普通施工方案必须包含：
 
