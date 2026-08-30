@@ -1,6 +1,13 @@
 # Changelog
 
 
+## v1.5.0 - 2026-08-30
+
+- Refocused public documentation on core user problems and practical value.
+- Simplified README visual hierarchy and compressed verbose matrix tables.
+- Added comprehensive English translation (`README_EN.md`) with language switcher.
+- Strengthened Markdown rendering compatibility.
+
 ## v1.4.0 - 2026-08-29
 
 - Added Host execution gating and minimum Owner Gate (S2.3).

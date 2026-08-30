@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.4
+# 中枢 Runtime Deployment Pack V1.5
 
 ## 1. 这是什么
 
@@ -300,7 +300,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.4 Runtime 不做：
+V1.5 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；

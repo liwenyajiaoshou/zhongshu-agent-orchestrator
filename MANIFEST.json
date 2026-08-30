@@ -1,17 +1,15 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.4",
-  "stage": "S2.3",
-  "date": "2026-08-27",
+  "runtime_version": "V1.5",
+  "stage": "S2.4",
+  "date": "2026-08-30",
   "upgrade_focus": [
-    "重复失败换挡",
-    "受约束自主调试",
-    "复杂调试前全链审计",
-    "Codex 上下文饱和与压缩交接",
-    "对话线程 / Codex 线程术语区分"
+    "README visual hierarchy",
+    "Core problem refocus",
+    "Bilingual support"
   ],
-  "latest_upgrade": "Host execution gating and minimum Owner Gate",
-  "scope_note": "仅调整 Codex 线程，不涉及网页版对话线程模型切换",
+  "latest_upgrade": "Documentation and presentation overhaul",
+  "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",
     "Token Is a Signal, Not a Threshold",
