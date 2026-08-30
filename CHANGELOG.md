@@ -1,5 +1,12 @@
-# Changelog
+﻿# Changelog
 
+
+## v1.6.1 - 2026-08-31
+
+- Added constraints for web dialog output (policies/web-dialog-output.md) to prioritize Owner-facing summaries over verbose engineering analysis.
+- Added a structured review response template (	emplates/web-review-response.md) for web dialogue.
+- Cancelled the mandatory "Model Capability" assessment display in normal scenarios, triggering it only upon verified quality issues.
+- Integrated all relevant template and policy updates from the S2.5.1 revision.
 
 ## v1.5.0 - 2026-08-30
 
@@ -34,3 +41,4 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+

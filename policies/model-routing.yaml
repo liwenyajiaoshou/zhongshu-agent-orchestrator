@@ -1,63 +1,77 @@
-# 模型路由配置
-# 核心 Skill 只使用 tier，不把具体模型名称写死在行为逻辑中。
-# 可根据可用模型、价格和能力更新此文件。
+# 中枢模型路由配置 V1.5
+# 核心 Skill 使用 tier；具体模型映射可随可用模型/成本调整。
+# 重要：A/B/C 不是模型等级映射。
 
 tiers:
   low:
     preferred_model: "GPT-5.6 Luna"
-    default_reasoning: "medium"
-    suitable_for:
-      - "A 类小补丁"
-      - "只读 Reality Check"
-      - "报告修正"
-      - "边界清晰测试任务"
+    relative_cost: low
+    default_reasoning: medium
 
   medium:
     preferred_model: "GPT-5.6 Terra"
-    default_reasoning: "medium"
-    suitable_for:
-      - "B 类多文件普通工程"
-      - "局部模块增强"
-      - "普通重构"
-      - "中等范围兼容修复"
+    relative_cost: medium
+    default_reasoning: medium
 
   high:
     preferred_model: "GPT-5.6 Sol"
-    default_reasoning: "high"
-    suitable_for:
-      - "C 类复杂架构"
-      - "跨系统根因"
-      - "高风险业务语义"
-      - "生产/正式数据相关决策"
+    relative_cost: high
+    default_reasoning: high
 
-mechanical:
-  preferred_tool: "Antigravity"
-  use_when:
-    - "高重复低判断密度"
-    - "批量机械编辑"
-    - "截图与视觉验收"
-    - "格式整理"
-  avoid_when:
-    - "需要复杂代码语义判断"
-    - "需要跨模块架构推理"
+core_rules:
+  - "Lowest Viable Capability：质量可靠时优先最低可行 tier。"
+  - "Complexity Chooses Model, Risk Chooses Guardrails：风险主要决定护栏，推理复杂度主要决定模型。"
+  - "A/B/C 不与 low/medium/high 一一绑定。"
+  - "不要因为任务重要、正式数据或阶段关键就自动使用 high。"
 
-rules:
-  - "先判断任务规模，再选择模型。"
-  - "质量满足要求时优先较低 tier。"
-  - "不要因为任务重要就自动使用最高 tier。"
-  - "如果较低 tier 连续暴露真实能力不足，再升级，不因保险心理升级。"
+task_model_assessment:
+  consider:
+    - cross_module_dependency
+    - semantic_ambiguity
+    - contract_state_complexity
+    - root_cause_difficulty
+    - long_constraint_maintenance
+    - observed_model_capability
 
+fresh_thread_model_rebaseline:
+  required_on_new_codex_thread: true
+  previous_model_is_authority: false
+  rule: "新 Codex 线程按当前任务重新选择最低可行 tier。"
+
+high_tier_exit_review:
+  triggers:
+    - ROOT_CAUSE_LOCALIZED
+    - PASS
+    - OFFLINE_PASS
+    - CLEAR_BLOCKER
+    - LIVE_VALIDATION_ONLY
+    - MECHANICAL_FOLLOWUP
+    - NEW_CODEX_THREAD
+    - ANALYSIS_TO_EXECUTION
+  rule: "High Tier Is a Temporary Lease：到语义任务边界重新定级。"
 
 codex_switching:
-  scope: "Codex 线程专用，不约束网页版对话线程"
+  scope: "只适用于 Codex 线程，不约束网页版对话线程。"
 
-  decision_order:
-    - "先判断 Codex 上下文是否健康且具有高价值"
-    - "再判断当前模型能力是否足够"
-    - "若模型能力足够，优先提高推理等级，不换模型"
-    - "若模型能力不足，已有实质上下文时默认新开 Codex 线程并升级模型"
-    - "若上下文污染，即使模型不变也优先新开 Codex 线程"
-    - "模型降级同样默认通过新 Codex 线程完成"
+  reasoning_first_when:
+    - "当前模型对问题结构理解基本正确"
+    - "当前上下文健康且强关联"
+    - "任务仍处于当前模型能力范围"
+    - "主要缺口是需要更深推理"
+
+  reasoning_decrease_when:
+    - "根因已经明确"
+    - "只剩机械验证"
+    - "只剩测试/preflight/artifact read"
+    - "不需要跨模块重新推理"
+    - "高 reasoning 已无明显质量增益"
+
+  new_thread_and_upgrade_model_when:
+    - "较高 reasoning 下仍多轮无法收敛"
+    - "持续遗漏跨模块关系"
+    - "无法稳定维护复杂约束"
+    - "根因判断反复推翻"
+    - "任务明显超过当前模型能力"
 
   same_thread_model_switch:
     default: false
@@ -68,15 +82,38 @@ codex_switching:
       - "尚未形成重要中间判断"
       - "没有高价值上下文需要保留"
 
-  reasoning_first_when:
-    - "当前模型对问题结构理解基本正确"
-    - "当前上下文健康且强关联"
-    - "任务仍处于当前模型能力范围"
-    - "主要缺口是需要更深推理而非更高能力上限"
+model_routing_reason_codes:
+  - NORMAL_TASK
+  - CROSS_MODULE_ROOT_CAUSE
+  - BUSINESS_SEMANTIC_AMBIGUITY
+  - LOWER_TIER_FAILED_WITH_HIGH_REASONING
+  - CONTEXT_AFFINITY_KEEP_MODEL
+  - ROOT_CAUSE_LOCALIZED
+  - LIVE_VALIDATION_ONLY
+  - MECHANICAL_FOLLOWUP
+  - FRESH_THREAD_REBASELINE
 
-  new_thread_and_upgrade_model_when:
-    - "较高推理等级下仍多轮无法收敛"
+post_execution_quality_review:
+  required: true
+  note: "实际施工可能未采用中枢推荐模型；审计真实质量，不按推荐符合度打分。"
+  quality_levels:
+    - GOOD
+    - ACCEPTABLE
+    - INSUFFICIENT
+    - UNKNOWN
+  possible_causes:
+    - MODEL_CAPABILITY
+    - REASONING_BUDGET
+    - CONTEXT_SATURATION
+    - TASK_SPEC_AMBIGUITY
+    - ENVIRONMENT_OR_TOOLING
+    - TEST_OR_DATA
+    - IMPLEMENTATION_ERROR
+    - UNKNOWN
+  alert_model_capability_when:
+    - "任务规格清楚、环境可用、测试可靠"
+    - "较高 reasoning 后仍多轮不收敛"
     - "持续遗漏跨模块关系"
-    - "无法稳定维护复杂约束"
+    - "复杂约束无法稳定保持"
     - "根因判断反复推翻"
-    - "任务明显超过当前模型推荐档位"
+  alert_rule: "只有中高置信时提醒疑似模型能力不足；失败本身不是模型能力证据。"

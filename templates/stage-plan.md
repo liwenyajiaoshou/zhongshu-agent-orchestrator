@@ -3,17 +3,26 @@
 ## 执行建议
 
 - `task_class`: A / B / C
+- `inference_complexity`: LOW / MEDIUM / HIGH
 - `recommended_tool`:
-- `recommended_model_tier`:
+- `task_minimum_model_tier`: low / medium / high
+- `current_codex_model`:
+- `codex_model_action`: KEEP / UPGRADE / DOWNGRADE / NOT_APPLICABLE
 - `reasoning_level`:
+- `reasoning_action`: KEEP / INCREASE / DECREASE
+- `model_routing_reason`: 
+- `model_rebaseline_required`: true / false
 - `multi_agent`: false / true
 - `对话线程`: 继续 / 更换
 - `Codex 线程`: 继续 / 更换
-- `Codex 模型动作`: 保持 / 升级 / 降级
-- `推理等级动作`: 保持 / 提高 / 降低
-- `模型切换方式`: 不适用 / 原线程低上下文切换 / 新 Codex 线程压缩交接
 - `TUN`: on / off / unchanged
 - `write_mode`: read-only / writable
+
+注意：
+- A/B/C 主要描述范围/风险，不与模型 tier 一一绑定；
+- 新 Codex 线程必须重新按当前任务定级；
+- 当前高价值线程模型可保持，但 reasoning 可升降；
+- high tier 到 PASS / OFFLINE_PASS / 明确 blocker / 新任务边界时重新评估。
 
 ## task_goal
 
@@ -58,67 +67,6 @@
 - `data_write_boundary`:
 - `release_boundary`:
 
-## stop_conditions
-
-遇到以下情况停止并报告：
-- 需要真实联网 / 外部 API；
-- 需要联网下载依赖；
-- 需要正式数据写入；
-- 需要生产资产/生产业务语义变化；
-- 需要不可逆 Git；
-- 需要发布；
-- 风险从当前等级明显升级；
-- 需要 Owner 人工决策；
-- 发现项目治理规则冲突；
-- 工作区出现无法解释的新变化。
-
-## low_risk_autonomy
-
-在主目标和风险边界不变的前提下，允许 Agent 自主处理 fixture、helper、mock、临时目录、测试隔离、同目标测试补充和报告修正，不为这些事项另立方案。
-
-## report_path
-
-`{{REPORT_PATH}}`
-
-报告保持精简，不回显完整 Diff 或完整测试日志。
-
-
-## debug_escalation
-
-仅复杂调试时填写：
-
-```yaml
-mode: NORMAL | REPEATED_FAILURE_REVIEW | BOUNDED_AUTONOMOUS_DEBUG
-trigger_reasons: []
-full_chain_audit_required: false
-offline_first: true
-validation_state: UNVERIFIED | OFFLINE_PASS | LIVE_VALIDATION_REQUIRED | LIVE_VALIDATION_PASS
-```
-
-
-## Codex 换挡判定
-
-当推荐调整模型或推理等级时，必须说明：
-
-```yaml
-codex_context_quality: HIGH | MEDIUM | LOW
-current_model_capability: SUFFICIENT | INSUFFICIENT | UNCERTAIN
-reasoning_budget: SUFFICIENT | INSUFFICIENT | UNCERTAIN
-decision:
-  keep_thread: true | false
-  keep_model: true | false
-  change_reasoning: KEEP | INCREASE | DECREASE
-  target_model_tier:
-handoff_required: true | false
-```
-
-默认规则：
-- 模型够 + 上下文高价值 → 原 Codex 线程，提高推理等级；
-- 模型不够 + 已有实质上下文 → 新 Codex 线程，升级模型；
-- 上下文污染 → 新 Codex 线程，模型重新按任务选择；
-- 原线程直接换模型仅允许在线程极短且尚未实质施工时。
-
-
 ## execution_gate
 
 ```yaml
@@ -139,8 +87,40 @@ owner_action:
   post_action_artifacts: []
 ```
 
-规则：
-- PowerShell / Shell / Python / CLI 不作为 Owner Gate 判定依据；
-- Owner Action 只保留真正跨越硬边界的最小动作；
-- Owner Action 完成后，Codex 应优先自动读取 machine-readable artifacts；
-- 如果卫兵 / TaskContract 已给出等价事实，直接消费/投影，不重复建设。
+PowerShell / Shell / Python / CLI 不作为 Owner Gate 判据。
+
+## debug_escalation
+
+仅复杂调试时填写：
+
+```yaml
+mode: NORMAL | REPEATED_FAILURE_REVIEW | BOUNDED_AUTONOMOUS_DEBUG
+trigger_reasons: []
+full_chain_audit_required: false
+offline_first: true
+validation_state: UNVERIFIED | OFFLINE_PASS | LIVE_VALIDATION_REQUIRED | LIVE_VALIDATION_PASS
+```
+
+## stop_conditions
+
+遇到以下情况停止并报告：
+- 需要超出当前授权的真实联网 / 外部 API；
+- 需要联网下载依赖；
+- 需要正式数据写入；
+- 需要生产资产/生产业务语义变化；
+- 需要不可逆 Git；
+- 需要发布；
+- 风险从当前等级明显升级；
+- 需要 Owner 人工决策；
+- 发现项目治理规则冲突；
+- 工作区出现无法解释的新变化。
+
+## low_risk_autonomy
+
+在主目标和风险边界不变的前提下，允许 Agent 自主处理 fixture、helper、mock、临时目录、测试隔离、同目标测试补充和报告修正，不为这些事项另立方案。
+
+## report_path
+
+`{{REPORT_PATH}}`
+
+报告保持精简，不回显完整 Diff 或完整测试日志。

@@ -1,14 +1,14 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.5",
-  "stage": "S2.4",
-  "date": "2026-08-30",
+  "runtime_version": "V1.6.1",
+  "stage": "S2.5.1",
+  "date": "2026-08-31",
   "upgrade_focus": [
-    "README visual hierarchy",
-    "Core problem refocus",
-    "Bilingual support"
+    "Web dialog UX",
+    "Review format standard",
+    "Cancellation of constant model capability score"
   ],
-  "latest_upgrade": "Documentation and presentation overhaul",
+  "latest_upgrade": "Web dialog output constraints and web review template",
   "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",
@@ -34,7 +34,9 @@
     "policies/execution-gating.md",
     "templates/stage-plan.md",
     "templates/stage-report.md",
-    "templates/thread-handoff.md"
+    "templates/thread-handoff.md",
+    "policies/web-dialog-output.md",
+    "templates/web-review-response.md"
   ],
   "project_instructions_file": "PROJECT_INSTRUCTIONS.txt"
 }

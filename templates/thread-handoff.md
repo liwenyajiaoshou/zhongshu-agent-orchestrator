@@ -84,3 +84,16 @@ codex_context:
 
 ## 压缩原则
 只保留当前 authority，不复制完整调试历史。优先保留当前阶段与状态、最新有效 contract/schema/data authority、最新 offline/live evidence、已关闭根因与禁止重查项、当前 blocker、允许/禁止范围和最新测试基线。删除或省略旧失败日志、旧 prompt、被推翻假设过程、重复命令输出及与下一任务无关的历史实现细节。
+
+
+## 新 Codex 线程模型重新定级
+
+```yaml
+task_minimum_model_tier:
+previous_codex_model:
+previous_model_is_authority: false
+model_rebaseline_required: true
+switch_reason:
+```
+
+新 Codex 线程不得仅因上一线程使用 high tier 就自动继承 high tier。
