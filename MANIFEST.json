@@ -1,14 +1,16 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.6.1",
-  "stage": "S2.5.1",
+  "runtime_version": "V1.7.0",
+  "stage": "S2.6",
   "date": "2026-08-31",
   "upgrade_focus": [
     "Web dialog UX",
     "Review format standard",
-    "Cancellation of constant model capability score"
+    "Cancellation of constant model capability score",
+    "Blocker thread split",
+    "Context saturation review for web dialogs"
   ],
-  "latest_upgrade": "Web dialog output constraints and web review template",
+  "latest_upgrade": "Dialogue Thread Split and Saturation Management",
   "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",
@@ -36,7 +38,8 @@
     "templates/stage-report.md",
     "templates/thread-handoff.md",
     "policies/web-dialog-output.md",
-    "templates/web-review-response.md"
+    "templates/web-review-response.md",
+    "policies/dialogue-thread-management.md"
   ],
   "project_instructions_file": "PROJECT_INSTRUCTIONS.txt"
 }

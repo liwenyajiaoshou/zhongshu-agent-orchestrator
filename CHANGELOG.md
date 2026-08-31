@@ -1,6 +1,11 @@
 ﻿# Changelog
 
 
+## v1.7.0 - 2026-08-31
+
+- Added policies/dialogue-thread-management.md to define splitting logic for Blocker Threads and handle Dialogue Context Saturation in web workflows.
+- Prevented automatic opening of new threads for every minor issue or blocker, ensuring thread coherence and proper context closure.
+
 ## v1.6.1 - 2026-08-31
 
 - Added constraints for web dialog output (policies/web-dialog-output.md) to prioritize Owner-facing summaries over verbose engineering analysis.
@@ -41,4 +46,5 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+
 

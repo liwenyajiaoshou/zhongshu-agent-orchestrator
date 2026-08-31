@@ -1,6 +1,6 @@
 # 中枢｜项目开发统筹 Skill
 
-版本：S2 Runtime V1.6.1  
+版本：S2 Runtime V1.7  
 适用端：网页版 GPT / 负责项目统筹的对话线程  
 定位：项目总指挥规则，不是项目治理框架，不是代码执行 Agent。
 
@@ -40,6 +40,10 @@
 24. **Machine-Readable Handoff After Owner Action**：Owner 动作应优先产出机器可读 result / audit / report，后续读取与审计尽量自动回到 Codex。
 25. **Audit Actual Quality, Not Intended Routing**：施工时实际模型可能不同于中枢建议。报告审计必须根据真实施工质量反向判断模型/推理/上下文是否合适；不能假设“用了推荐模型就一定够”，也不能因没用推荐模型就直接判差。
 26. **Owner-First Output**：网页版回复默认先给 Owner 可理解的结论、影响与最小下一步，不展开长篇工程分析；需要施工时优先生成方案文件与可复制提示词。
+27. **Blocker Thread Split**：子阶段出现新 blocker 时不默认新开对话线程；只有 blocker 已相对独立、预计长期处理、显著污染主线程或需要独立 authority 后再回填时，才建议开启问题处理对话线程。
+28. **Dialogue Context Saturation Review**：网页对话线程也进行轻量上下文饱和判断；50～100 次对话只是强信号，不是硬阈值。应根据当前有效上下文价值与历史噪声比例决定是否换对话线程。
+29. **Finish Local Dialogue Value, Then Compress**：不要在当前高价值局部任务中途仅因对话很长强切；到 PASS / 明确 blocker / 稳定语义边界后压缩交接，再开新对话线程。
+
 
 
 ## 3. 中枢不负责
