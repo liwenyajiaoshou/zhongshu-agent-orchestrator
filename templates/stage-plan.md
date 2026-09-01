@@ -2,6 +2,7 @@
 
 ## 执行建议
 
+- `execution_mode`: RESEARCH / EXECUTION
 - `task_class`: A / B / C
 - `inference_complexity`: LOW / MEDIUM / HIGH
 - `recommended_tool`:
@@ -23,6 +24,18 @@
 - 新 Codex 线程必须重新按当前任务定级；
 - 当前高价值线程模型可保持，但 reasoning 可升降；
 - high tier 到 PASS / OFFLINE_PASS / 明确 blocker / 新任务边界时重新评估。
+
+## research_contract
+
+仅 `execution_mode = RESEARCH` 时填写：
+
+```yaml
+decision_question:
+required_evidence: []
+stop_condition:
+```
+
+达到 `stop_condition` 后停止继续扩展研究并输出 Decision。
 
 ## task_goal
 

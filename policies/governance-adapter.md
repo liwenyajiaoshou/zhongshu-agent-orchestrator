@@ -56,3 +56,27 @@ interface_capability:
 - 可以基于最新施工报告做项目级判断；
 - 不得声称已验证当前 Git 状态或真实代码实现；
 - 如确需机器事实，生成 Codex 只读 Reality Check。
+
+
+## 中枢—卫兵最小语义接口
+
+中枢只要求概念可映射，不要求卫兵使用完全相同字段名：
+
+```yaml
+project_phase:
+execution_mode: RESEARCH | EXECUTION
+task_class: A | B | C
+task_contract_status: NONE | ACTIVE | CLOSED | SUPERSEDED
+workspace_state:
+risk_state:
+closure_state:
+next_allowed_action:
+```
+
+规则：
+
+1. 已有同义字段优先复用；
+2. 缺失但不阻塞当前决策时允许 `UNKNOWN`；
+3. 不因为命名不同就新建第二套字段；
+4. 如发现中枢与卫兵语义冲突，只记录冲突与最小兼容建议；
+5. 不跨项目修改卫兵。

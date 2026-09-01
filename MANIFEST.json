@@ -1,16 +1,19 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.7.0",
-  "stage": "S2.6",
-  "date": "2026-08-31",
+  "runtime_version": "V1.8.0",
+  "stage": "S2.7",
+  "date": "2026-09-01",
   "upgrade_focus": [
     "Web dialog UX",
     "Review format standard",
     "Cancellation of constant model capability score",
     "Blocker thread split",
-    "Context saturation review for web dialogs"
+    "Context saturation review for web dialogs",
+    "Authoritative state recovery",
+    "Research vs Execution branching",
+    "Delta vs Full handoff"
   ],
-  "latest_upgrade": "Dialogue Thread Split and Saturation Management",
+  "latest_upgrade": "State Handoff and Research/Execution TaskContract Lifecycle",
   "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",
@@ -39,7 +42,11 @@
     "templates/thread-handoff.md",
     "policies/web-dialog-output.md",
     "templates/web-review-response.md",
-    "policies/dialogue-thread-management.md"
+    "policies/dialogue-thread-management.md",
+    "policies/research-execution.md",
+    "policies/state-and-handoff.md",
+    "policies/taskcontract-lifecycle.md",
+    "templates/current-state.md"
   ],
   "project_instructions_file": "PROJECT_INSTRUCTIONS.txt"
 }

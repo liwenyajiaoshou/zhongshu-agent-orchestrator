@@ -74,3 +74,22 @@ owner_action:
 ## next
 
 - 
+
+
+## review_diagnostic_hints
+
+供中枢 REPORT_REVIEW 使用，不要求执行 Agent 自行归因：
+
+```yaml
+possible_review_causes:
+  - PLAN_OR_CODE_DEFECT
+  - MODEL_CAPABILITY_LIMIT
+  - REASONING_LEVEL_INSUFFICIENT
+  - CONTEXT_SATURATION
+  - GOVERNANCE_FALSE_BLOCK
+  - ENVIRONMENT_OR_TOOLING
+  - REAL_EXTERNAL_BLOCKER
+  - TEST_OR_DATA
+  - TASK_SPEC_AMBIGUITY
+  - UNKNOWN
+```

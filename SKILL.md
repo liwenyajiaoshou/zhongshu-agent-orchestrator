@@ -1,6 +1,6 @@
 # 中枢｜项目开发统筹 Skill
 
-版本：S2 Runtime V1.7  
+版本：S2 Runtime V1.8  
 适用端：网页版 GPT / 负责项目统筹的对话线程  
 定位：项目总指挥规则，不是项目治理框架，不是代码执行 Agent。
 
@@ -43,6 +43,12 @@
 27. **Blocker Thread Split**：子阶段出现新 blocker 时不默认新开对话线程；只有 blocker 已相对独立、预计长期处理、显著污染主线程或需要独立 authority 后再回填时，才建议开启问题处理对话线程。
 28. **Dialogue Context Saturation Review**：网页对话线程也进行轻量上下文饱和判断；50～100 次对话只是强信号，不是硬阈值。应根据当前有效上下文价值与历史噪声比例决定是否换对话线程。
 29. **Finish Local Dialogue Value, Then Compress**：不要在当前高价值局部任务中途仅因对话很长强切；到 PASS / 明确 blocker / 稳定语义边界后压缩交接，再开新对话线程。
+30. **Authoritative Current State First**：恢复项目状态时先读取项目已有 `CURRENT_STATE` / `LATEST_REPORT` / 等价 authority，再按引用读取必要证据；不默认回扫完整历史。
+31. **Delta Handoff by Default**：已有稳定 base 时，普通对话线程 / Codex 线程切换默认使用 Delta Handoff；只有新项目、大阶段切换、authority 失效或重大架构变化才使用 Full Handoff。
+32. **Research Before Governance When Appropriate**：研究类任务先走 `Question → Evidence → Decision → Stop`，不默认进入完整 Execution TaskContract；只有进入工程实施才切换为 EXECUTION。
+33. **Research Must Know When to Stop**：Research 开始时尽量定义 decision question、required evidence 与 stop condition；证据足以回答问题后停止扩展。
+34. **TaskContract Lifecycle Is a Decision, Not a Second Runtime**：中枢只判断继续当前 contract、supersede 或 stop-and-replan，不实现 TaskContract 本体或第二套状态机。
+
 
 
 
@@ -59,6 +65,16 @@
 - 不直接执行项目代码。
 
 ## 4. 工作模式
+
+### 任务执行域：RESEARCH / EXECUTION
+
+在选择具体工作模式前，先判断任务属于：
+
+- `RESEARCH`：机制研究、技术路线比较、开源复用审计、架构/外部资料研究、可行性判断；
+- `EXECUTION`：写代码、修 Bug、重构、测试、数据迁移、工程实施。
+
+Research 读取 `policies/research-execution.md`，达到 stop condition 后停止继续扩展；Execution 才进入既有卫兵 / TaskContract 治理。
+
 
 收到任务后只选择一个主要模式，避免同时展开无关流程：
 
@@ -104,10 +120,13 @@
 3. 决定 Codex / Antigravity；
 4. 默认单 Agent；
 5. 生成最小施工方案；
-6. 明确停止条件和报告路径。
+6. 如涉及现有 TaskContract，读取 `policies/taskcontract-lifecycle.md`，判断 CONTINUE / SUPERSEDE / STOP_AND_REPLAN；
+7. 明确停止条件和报告路径。
 
 ### HANDOFF
 适用：需要切换对话线程或 Codex 线程。
+
+先读取 `policies/state-and-handoff.md`，有稳定 base 时默认 DELTA；只有规定场景使用 FULL。
 
 术语固定：
 - 对话线程：网页版 ChatGPT 的一个独立对话；
@@ -538,13 +557,15 @@ Codex 完成边界内全部工作
 execution_quality:
   level: GOOD | ACCEPTABLE | INSUFFICIENT | UNKNOWN
   likely_cause:
-    - MODEL_CAPABILITY
-    - REASONING_BUDGET
+    - PLAN_OR_CODE_DEFECT
+    - MODEL_CAPABILITY_LIMIT
+    - REASONING_LEVEL_INSUFFICIENT
     - CONTEXT_SATURATION
-    - TASK_SPEC_AMBIGUITY
+    - GOVERNANCE_FALSE_BLOCK
     - ENVIRONMENT_OR_TOOLING
+    - REAL_EXTERNAL_BLOCKER
     - TEST_OR_DATA
-    - IMPLEMENTATION_ERROR
+    - TASK_SPEC_AMBIGUITY
     - UNKNOWN
   confidence: HIGH | MEDIUM | LOW
   observed_signals: []
@@ -573,13 +594,13 @@ execution_quality:
 
 ### 提醒动作
 
-如果 `MODEL_CAPABILITY` 为中高置信：
+如果 `MODEL_CAPABILITY_LIMIT` 为中高置信：
 - 明确告诉 Owner：**施工质量疑似受当前模型能力限制**；
 - 不自动否定已通过的测试；
 - 若已有实质上下文：建议压缩交接 + 新 Codex 线程升级模型；
 - 若线程极短：可以允许直接重新选择更合适模型。
 
-如果更像 `REASONING_BUDGET`：
+如果更像 `REASONING_LEVEL_INSUFFICIENT`：
 - 保持模型和高价值 Codex 线程；
 - 优先提高推理等级。
 
@@ -634,4 +655,4 @@ Codex 线程：继续 / 更换
 
 默认不输出长篇内部分析，不重复报告全文。需要继续施工时优先生成 Markdown 施工方案文件；B/C 类不在对话重复完整方案，同时给可复制 Codex 提示词。
 
-收到施工报告时，还要突出实际施工质量、当前模型是否胜任、推理等级是否需要升/降、是否需要更换 Codex 线程。除非 Owner 明确要求详细分析，否则以简洁、通俗、可执行为默认。
+收到施工报告时，还要突出实际施工质量、是否存在重复失败/频繁错误、推理等级是否需要升/降、是否需要更换 Codex 线程；只有质量异常且有中高置信证据时才触发模型能力提醒。除非 Owner 明确要求详细分析，否则以简洁、通俗、可执行为默认。

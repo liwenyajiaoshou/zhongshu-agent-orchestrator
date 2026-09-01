@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.7
+# 中枢 Runtime Deployment Pack V1.8
 
 ## 1. 这是什么
 
@@ -300,7 +300,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.7 Runtime 不做：
+V1.8 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；
@@ -548,3 +548,19 @@ sequenceDiagram
 ```
 
 瀵硅瘽绾跨▼涓?Codex 绾跨▼鍒嗗埆鍒ゆ柇锛屼笉缁戝畾銆
+
+---
+
+## V1.8 鏂板锛氱姸鎬佹仮澶嶃€佺爺绌?鏂藉伐鍒嗘祦涓?TaskContract 鐢熷懡鍛ㄦ湡鍐崇瓥
+
+Reality Check 鍚庡彧琛ョ湡瀹炵己鍙ｏ細
+
+- Authoritative Current State锛氫紭鍏堝鐢ㄧ幇鏈?`CURRENT_STATE` / `LATEST_REPORT`锛屽繀瑕佹椂鎵嶄娇鐢ㄨ交閲忔ā鏉匡紱
+- Full / Delta Handoff锛氭櫘閫氭崲绾跨▼榛樿 Delta锛?
+- TaskContract 鐢熷懡鍛ㄦ湡锛氫腑鏋㈠彧鍋?CONTINUE / SUPERSEDE / STOP_AND_REPLAN锛?
+- Research / Execution锛氱爺绌朵换鍔′笉榛樿濂楀畬鏁存柦宸ユ不鐞嗭紱
+- Research Stop Condition锛氳揪鍒拌瘉鎹仠姝㈡潯浠跺悗缁撴潫鐮旂┒锛?
+- REPORT_REVIEW锛氳ˉ鍏?Governance False Block / Real External Blocker 绛夎瘖鏂紱
+- 淇 V1.7 `web-dialog-output.md` 涓?Project Instructions 鍏充簬鈥滄ā鍨嬭儨浠诲害鈥濈殑鍐茬獊銆?
+
+娌℃湁鏂板 Context Manager銆乀oken 鐩戞帶銆乀askContract Runtime 鎴栫浜屽鍗叺銆

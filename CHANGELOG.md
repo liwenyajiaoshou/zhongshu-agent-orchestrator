@@ -1,6 +1,13 @@
 ﻿# Changelog
 
 
+## v1.8.0 - 2026-09-01
+
+- Added policies/research-execution.md to distinguish Research from Execution tasks, ensuring research stops effectively without unneeded governance overhead.
+- Added policies/state-and-handoff.md and 	emplates/current-state.md to support Delta/Full Handoffs and authoritative state recovery, avoiding full historical scans when possible.
+- Added policies/taskcontract-lifecycle.md to define Zhongshu's role in TaskContract lifecycle management (CONTINUE/SUPERSEDE/STOP_AND_REPLAN).
+- Expanded REPORT_REVIEW to detect Governance False Block, Real External Blocker, and Environment/Tooling blockers.
+
 ## v1.7.0 - 2026-08-31
 
 - Added policies/dialogue-thread-management.md to define splitting logic for Blocker Threads and handle Dialogue Context Saturation in web workflows.
@@ -46,5 +53,6 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+
 
 

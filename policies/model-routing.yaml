@@ -108,6 +108,9 @@ post_execution_quality_review:
     - TASK_SPEC_AMBIGUITY
     - ENVIRONMENT_OR_TOOLING
     - TEST_OR_DATA
+    - PLAN_OR_CODE_DEFECT
+    - GOVERNANCE_FALSE_BLOCK
+    - REAL_EXTERNAL_BLOCKER
     - IMPLEMENTATION_ERROR
     - UNKNOWN
   alert_model_capability_when:

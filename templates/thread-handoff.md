@@ -1,5 +1,25 @@
 # {{PROJECT}}｜对话线程 / Codex 线程交接
 
+## 交接模式
+
+```yaml
+handoff_mode: FULL | DELTA
+base:
+```
+
+- 普通长线程切换默认 `DELTA`；
+- 新项目、大阶段切换、authority 失效、重大架构变化或 base 不足时才用 `FULL`。
+
+### DELTA 必填
+
+```yaml
+changes_since_base:
+closed:
+new_blockers:
+current_next_action:
+authoritative_sources:
+```
+
 ## 项目
 
 {{PROJECT_SUMMARY}}
