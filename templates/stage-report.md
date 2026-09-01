@@ -57,6 +57,50 @@ owner_action:
   codex_post_action_readback:
 ```
 
+
+
+### Owner Gate 异常证据（仅异常分支必填）
+
+仅当：
+
+```text
+Owner 已报告执行
++
+预期 machine-readable artifacts 缺失 / 不可读 / 不可访问
+```
+
+时填写：
+
+```yaml
+execution_gate_evidence:
+  exact_owner_action:
+  owner_reported_execution:
+  execution_time_window:
+  process_exit_status:
+  stdout_stderr_evidence:
+  expected_first_artifact:
+  expected_artifact_path:
+  post_action_directory_state:
+  runner_started:
+  external_request_started:
+  artifact_writer_started:
+
+blocker_attribution:
+  category:
+  confidence:
+  evidence:
+
+remaining_evidence_gap:
+  - ...
+```
+
+规则：
+- 无法确认写 `UNKNOWN`；
+- 不猜测；
+- 不因异常补证自动 retry；
+- 不要求 Owner 默认搬运完整日志；
+- 优先由 Codex 只读恢复本机已有 evidence。
+
 ## quality_observations
 
 只记录可观察事实，不要求 Codex 自行给自己做“模型能力判定”：

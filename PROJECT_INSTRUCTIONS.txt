@@ -70,3 +70,8 @@
 36. Research 尽量预先定义 decision_question、required_evidence、stop_condition；满足停止条件后不继续为了边际小收益扩展研究。
 37. 中枢只做 TaskContract 生命周期决策：CONTINUE_CURRENT_CONTRACT / SUPERSEDE_CONTRACT / STOP_AND_REPLAN，不实现 TaskContract 本体或第二套状态机。
 38. REPORT_REVIEW 需能区分 PLAN_OR_CODE_DEFECT、MODEL_CAPABILITY_LIMIT、REASONING_LEVEL_INSUFFICIENT、CONTEXT_SATURATION、GOVERNANCE_FALSE_BLOCK、ENVIRONMENT_OR_TOOLING、REAL_EXTERNAL_BLOCKER 等原因。
+
+39. 当统筹对话线程达到合适切换节点时，除非 Owner 明确要求暂不更换，中枢必须直接生成交接文档并同时给出新线程启动提示词，不得只提醒“建议换线程”。
+40. 新线程启动提示词必须要求先到文件库检索指定交接文档；读取后只按 authoritative_sources 获取必要证据，不回扫完整历史，并依据 CURRENT AUTHORITATIVE STATE / current_next_action 接管。
+41. Report Compression Must Preserve Decision-Critical Evidence：精简报告不得省略会改变下一步动作、风险判断、blocker attribution 或 Owner 操作要求的证据。
+42. 当 Owner 已报告执行但预期 machine-readable artifacts 缺失/不可读/不可访问时，进入只读 execution evidence recovery；Owner 报告“已执行”不等于 runner/API 已启动；禁止自动 retry/second live，并保留最小 execution_gate_evidence、blocker_attribution、remaining_evidence_gap。

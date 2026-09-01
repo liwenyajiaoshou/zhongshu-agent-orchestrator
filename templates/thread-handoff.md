@@ -74,6 +74,38 @@ Codex 线程：继续 / 更换
 
 如更换 Codex 线程，明确是“Codex 施工线程”还是“Codex 调试线程”。
 
+
+
+## CURRENT AUTHORITATIVE STATE
+
+```yaml
+current_phase:
+status:
+active_task_contract:
+last_verified_state:
+known_blockers:
+current_next_action:
+authoritative_sources:
+```
+
+## 新对话线程启动提示词
+
+```text
+你现在接管「{{PROJECT}}」项目统筹。
+
+请先到 ChatGPT 文件库检索并读取：
+<THIS_HANDOFF_FILENAME>
+
+读取后：
+1. 以文档中的 CURRENT AUTHORITATIVE STATE 为当前权威状态；
+2. 只按 authoritative_sources 读取必要证据；
+3. 不回扫完整历史；
+4. 不重新打开 RESOLVED / DO NOT REOPEN；
+5. 按 current_next_action 直接接管推进。
+
+如果文件库找不到该交接文档，明确报告“未找到指定交接文档”，不要凭历史猜测项目状态。
+```
+
 ## Codex 上下文压缩（仅换 Codex 线程时）
 
 ```text

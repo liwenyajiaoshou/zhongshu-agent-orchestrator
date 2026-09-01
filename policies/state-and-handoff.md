@@ -99,3 +99,51 @@ authoritative_sources:
 - 自动状态同步器；
 - Context Manager；
 - 自动跨线程复制历史。
+
+
+## 6. 统筹对话线程主动交接
+
+当统筹对话线程达到适合切换的自然节点，中枢应主动交付交接材料，而不是只给建议。
+
+### 触发后默认动作
+
+除非 Owner 明确要求暂不更换：
+
+```text
+生成交接文档
+→ 给出文件名 / 链接
+→ 生成新线程启动提示词
+```
+
+交接文档至少包含：
+
+```text
+CURRENT AUTHORITATIVE STATE
+RESOLVED / DO NOT REOPEN
+CURRENT BLOCKER
+CURRENT STAGE / SUBSTAGE
+ALLOWED / FORBIDDEN SCOPE
+LATEST TEST / REPORT BASELINE
+current_next_action
+authoritative_sources
+```
+
+### 新线程启动提示词
+
+必须明确写：
+
+```text
+请先到文件库检索：
+<指定交接文档文件名>
+
+读取后，以其中 CURRENT AUTHORITATIVE STATE 为当前状态；
+只按 authoritative_sources 读取必要证据，不回扫完整历史；
+按 current_next_action 接管推进。
+```
+
+如果文件库检索不到指定文档：
+- 不猜测历史；
+- 明确报告未找到；
+- 再请求最小必要定位信息。
+
+本规则不建立交接管理器，只规范现有 Full / Delta Handoff 的交付方式。

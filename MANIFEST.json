@@ -1,8 +1,8 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.8.0",
-  "stage": "S2.7",
-  "date": "2026-09-01",
+  "runtime_version": "V1.9.0",
+  "stage": "S2.8",
+  "date": "2026-09-02",
   "upgrade_focus": [
     "Web dialog UX",
     "Review format standard",
@@ -11,9 +11,12 @@
     "Context saturation review for web dialogs",
     "Authoritative state recovery",
     "Research vs Execution branching",
-    "Delta vs Full handoff"
+    "Delta vs Full handoff",
+    "Handoff as a deliverable",
+    "Evidence recovery for missing artifacts",
+    "Preserve decision-critical evidence in report compression"
   ],
-  "latest_upgrade": "State Handoff and Research/Execution TaskContract Lifecycle",
+  "latest_upgrade": "Handoff Deliverables and Execution Gate Evidence Recovery",
   "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",

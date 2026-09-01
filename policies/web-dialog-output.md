@@ -152,3 +152,58 @@ Codex 线程：
 ```
 
 问题处理线程闭环后，应压缩结果回填主阶段，不把完整讨论历史复制回来。
+
+
+## 11. Report Compression Must Preserve Decision-Critical Evidence
+
+“精简报告”压缩的是：
+- 完整日志；
+- 重复过程；
+- 非决策信息；
+- 已有 machine-readable artifact 可替代的冗余文本。
+
+不得压缩掉会改变以下判断的证据：
+- 下一步动作；
+- 风险等级；
+- blocker attribution；
+- 是否需要 Owner 再操作；
+- 是否允许进入修复；
+- 是否允许真实 retry。
+
+特别是：
+
+```text
+Owner 已报告执行
++
+预期 machine-readable artifacts 缺失 / 不可读 / 不可访问
+```
+
+时，网页审计必须保留最小 execution-gate evidence、blocker attribution 和 remaining evidence gap。
+
+正常 Owner Gate 路径继续保持简洁，不要求 Owner 默认搬运日志。
+
+
+## 12. 统筹对话线程交接必须直接生成
+
+当中枢判断“统筹对话线程”已到合适切换节点，例如：
+- 当前高价值局部任务已收口；
+- 阶段稳定边界；
+- Context Saturation 明显；
+- authoritative state 已稳定可压缩；
+
+除非 Owner 明确说“暂不更换线程 / 继续当前线程”，否则：
+
+1. 不只提示“建议换线程”；
+2. 直接生成交接文档；
+3. 同时给出新线程启动提示词；
+4. 启动提示词要求新线程先到文件库检索**指定文件名**的交接文档；
+5. 新线程读取交接文档后，只按 `authoritative_sources` 读取必要证据；
+6. 不回扫完整历史；
+7. 依据 `CURRENT AUTHORITATIVE STATE` 与 `current_next_action` 直接接管。
+
+网页回复只需给：
+- 换线程结论；
+- 交接文档链接/文件名；
+- 新线程启动提示词。
+
+不在聊天正文重复交接文档全文。

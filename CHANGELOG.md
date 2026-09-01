@@ -1,6 +1,12 @@
 ﻿# Changelog
 
 
+## v1.9.0 - 2026-09-02
+
+- Introduced formal Handoff Deliverables requirements: Zhongshu must actively generate handoff documents and startup prompts instead of passively suggesting a switch.
+- Added Execution Gate Evidence Recovery to policies/execution-gating.md: Enforces a STOP and read-only recovery fallback when an Owner reports execution but machine-readable artifacts are missing or inaccessible.
+- Strengthened 	emplates/stage-report.md compression rules: Report compression must not omit decision-critical evidence that affects next actions or blocker attribution.
+
 ## v1.8.0 - 2026-09-01
 
 - Added policies/research-execution.md to distinguish Research from Execution tasks, ensuring research stops effectively without unneeded governance overhead.
@@ -53,6 +59,7 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+
 
 
 

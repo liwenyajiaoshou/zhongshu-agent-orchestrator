@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.8
+# 中枢 Runtime Deployment Pack V1.9
 
 ## 1. 这是什么
 
@@ -300,7 +300,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.8 Runtime 不做：
+V1.9 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；
@@ -564,3 +564,39 @@ Reality Check 鍚庡彧琛ョ湡瀹炵己鍙ｏ細
 - 淇 V1.7 `web-dialog-output.md` 涓?Project Instructions 鍏充簬鈥滄ā鍨嬭儨浠诲害鈥濈殑鍐茬獊銆?
 
 娌℃湁鏂板 Context Manager銆乀oken 鐩戞帶銆乀askContract Runtime 鎴栫浜屽鍗叺銆
+
+---
+
+## V1.9 鏂板
+
+### 1. 缁熺瀵硅瘽绾跨▼涓诲姩浜ゆ帴
+鍒板悎閫傛崲绾跨▼鑺傜偣鏃讹紝闄ら潪 Owner 鏄庣‘鏆備笉鏇存崲锛?
+- 鐩存帴鐢熸垚浜ゆ帴鏂囨。锛?
+- 鍚屾椂鐢熸垚鏂扮嚎绋嬪惎鍔ㄦ彁绀鸿瘝锛?
+- 鏂扮嚎绋嬪厛鍒版枃浠跺簱妫€绱㈡寚瀹氫氦鎺ユ枃妗ｏ紱
+- 鍙寜 authoritative_sources 璇诲彇蹇呰璇佹嵁锛?
+- 鎸?CURRENT AUTHORITATIVE STATE / current_next_action 鎺ョ銆?
+
+### 2. Owner Gate 寮傚父璇佹嵁鎭㈠
+姝ｅ父 Owner Gate 璺緞缁х画淇濇寔绮剧畝銆?
+
+鑻ワ細
+```text
+Owner 宸叉姤鍛婃墽琛?
++
+棰勬湡 machine-readable artifacts 缂哄け/涓嶅彲璇?涓嶅彲璁块棶
+```
+
+鍒欙細
+```text
+STOP
+鈫?NO RETRY
+鈫?鍙 evidence recovery
+鈫?鏈€灏?blocker attribution
+```
+
+鏂板鍘熷垯锛?
+
+> Report Compression Must Preserve Decision-Critical Evidence.
+
+涓嶆柊寤?Execution Manager銆丱wner Gate 鐘舵€佹満鎴?Context Manager銆

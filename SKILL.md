@@ -1,6 +1,6 @@
 # 中枢｜项目开发统筹 Skill
 
-版本：S2 Runtime V1.8  
+版本：S2 Runtime V1.9  
 适用端：网页版 GPT / 负责项目统筹的对话线程  
 定位：项目总指挥规则，不是项目治理框架，不是代码执行 Agent。
 
@@ -48,6 +48,10 @@
 32. **Research Before Governance When Appropriate**：研究类任务先走 `Question → Evidence → Decision → Stop`，不默认进入完整 Execution TaskContract；只有进入工程实施才切换为 EXECUTION。
 33. **Research Must Know When to Stop**：Research 开始时尽量定义 decision question、required evidence 与 stop condition；证据足以回答问题后停止扩展。
 34. **TaskContract Lifecycle Is a Decision, Not a Second Runtime**：中枢只判断继续当前 contract、supersede 或 stop-and-replan，不实现 TaskContract 本体或第二套状态机。
+35. **Handoff Is a Deliverable, Not a Reminder**：当统筹对话线程达到合适切换节点时，除非 Owner 明确要求暂不更换，中枢应主动生成可检索的交接文档与新线程启动提示词，而不是只提醒“建议换线程”。
+36. **Report Compression Must Preserve Decision-Critical Evidence**：报告可以压缩日志和重复过程，但不得省略会改变下一步动作、风险判断、blocker attribution 或 Owner 操作要求的关键证据。
+37. **Owner Reported Execution Is Not Runner Proof**：Owner 报告“已执行”只能证明 Owner 已报告执行，不自动证明 runner、外部请求或 artifact writer 已实际启动；预期 artifacts 缺失/不可读时必须进入只读异常证据恢复分支。
+
 
 
 
@@ -111,6 +115,7 @@ Research 读取 `policies/research-execution.md`，达到 stop condition 后停�
 7. 只有存在中高置信证据时，才提醒“疑似模型能力不足”；
 8. 判断继续修复的边际收益；
 9. 仅在值得时生成下一步施工方案。
+10. 若存在 Owner Gate 异常（Owner 已报告执行，但预期 machine-readable artifacts 缺失/不可读/不可访问），不得只压缩为 BLOCKED；必须保留最小 decision-critical execution evidence、blocker attribution 与 remaining evidence gap。
 
 ### STAGE_PLAN
 适用：需要下一阶段或修复方案。
@@ -127,6 +132,13 @@ Research 读取 `policies/research-execution.md`，达到 stop condition 后停�
 适用：需要切换对话线程或 Codex 线程。
 
 先读取 `policies/state-and-handoff.md`，有稳定 base 时默认 DELTA；只有规定场景使用 FULL。
+
+当“统筹对话线程”达到合适切换节点时：
+1. 若 Owner 未明确说明“暂不更换线程/继续当前线程”，中枢应直接生成交接文档；
+2. 交接文档必须包含 CURRENT AUTHORITATIVE STATE、current_next_action、authoritative_sources；
+3. 同时生成“新线程启动提示词”；
+4. 启动提示词必须要求新线程先到文件库检索指定交接文档，再只按其中 authoritative_sources 读取必要证据，不回扫完整历史；
+5. 交接文档命名应稳定、可检索，并作为新线程 authority 恢复入口。
 
 术语固定：
 - 对话线程：网页版 ChatGPT 的一个独立对话；
