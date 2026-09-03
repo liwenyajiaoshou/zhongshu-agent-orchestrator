@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.9
+# 中枢 Runtime Deployment Pack V1.10
 
 ## 1. 这是什么
 
@@ -300,7 +300,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.9 Runtime 不做：
+V1.10 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；
@@ -600,3 +600,34 @@ STOP
 > Report Compression Must Preserve Decision-Critical Evidence.
 
 涓嶆柊寤?Execution Manager銆丱wner Gate 鐘舵€佹満鎴?Context Manager銆
+
+---
+
+## V1.10 鏂板锛歊esearch Mode Routing
+
+鏂板鏍稿績鍘熷垯锛?
+
+```text
+Deep Research Is a Retrieval Multiplier, Not a Quality Guarantee
+Normal Research First, Deep on Decision-Critical Gaps
+Research Contract Must Precede Research Mode
+Research Mode Is Independent of Model / Agent / Task Class
+```
+
+榛樿娴佺▼锛?
+
+```text
+Question
+鈫?Entity / Cutoff / Evidence Schema / Stop Condition
+鈫?Normal Research
+鈫?Evidence Gap Review
+鈫?Targeted Deep Research锛堜粎闇€瑕佹椂锛?
+鈫?Independent Audit
+鈫?Decision
+鈫?Stop
+```
+
+鐮旂┒娣卞害鎸?evidence chain銆乸rimary source銆佸巻鍙插叧绯诲拰 gap resolution 鍒ゆ柇锛屼笉鎸夋潵婧愭暟閲忔垨鎶ュ憡闀垮害鍒ゆ柇銆?
+
+鏄傝吹鐮旂┒鍏堝仛灏忔牱鏈?mode validation銆?
+A/B 鐮旂┒闇€娉ㄦ剰 File Library / shared context / snippet contamination銆

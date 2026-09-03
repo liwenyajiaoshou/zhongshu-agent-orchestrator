@@ -137,3 +137,31 @@ possible_review_causes:
   - TASK_SPEC_AMBIGUITY
   - UNKNOWN
 ```
+
+
+## research_review（仅 RESEARCH 任务填写）
+
+```yaml
+research_review:
+  mode: NORMAL | TARGETED_DEEP
+  decision_question:
+  decision_critical_evidence_gap:
+  deep_trigger_reason:
+  entity_integrity:
+  cutoff_integrity:
+  primary_source_quality:
+  evidence_traceability:
+  historical_chain_depth:
+  semantic_contract_fidelity:
+  evidence_gap_honesty:
+  stop_condition_fidelity:
+  unsupported_conclusion_risk:
+  mode_value: NECESSARY | USEFUL | LOW_MARGINAL_VALUE | MISROUTED
+  result: RESEARCH_PASS | RESEARCH_INCOMPLETE
+```
+
+规则：
+- `TARGETED_DEEP` 不自动意味着 `RESEARCH_PASS`；
+- 不使用 source count / report length 作为主要质量依据；
+- 重点判断当前 Evidence 是否足以支持 Decision；
+- A/B 研究若存在 File Library / shared context / snippet contamination，应明确记录，不得宣称严格 blind superiority。

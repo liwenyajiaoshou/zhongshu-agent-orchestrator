@@ -120,3 +120,10 @@ post_execution_quality_review:
     - "复杂约束无法稳定保持"
     - "根因判断反复推翻"
   alert_rule: "只有中高置信时提醒疑似模型能力不足；失败本身不是模型能力证据。"
+
+
+research_mode_independence:
+  research_mode_does_not_imply_high_model: true
+  research_mode_does_not_change_task_class: true
+  research_mode_does_not_require_more_agents: true
+  rule: "Research Mode、Model Tier、Agent Count、Task Class 分别路由；Deep Research 不自动提高模型 tier、Agent 数量或任务等级。"

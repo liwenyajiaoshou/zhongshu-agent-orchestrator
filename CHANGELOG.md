@@ -1,6 +1,12 @@
 ﻿# Changelog
 
 
+## v1.10.0 - 2026-09-03
+
+- Enshrined "Deep Research Is a Retrieval Multiplier, Not a Quality Guarantee" principle in project instructions, separating Research Mode from Model Tier, Agent Count, and Task Class routing.
+- Mandated "Normal Research First": Targeted Deep Research is only triggered when there are clear, decision-critical evidence gaps in normal research results.
+- Formalized "Research Contract Must Precede Research Mode": Decision Questions, Entity disambiguation, cutoff constraints, and Evidence Schemas must be frozen before determining the research mode.
+
 ## v1.9.0 - 2026-09-02
 
 - Introduced formal Handoff Deliverables requirements: Zhongshu must actively generate handoff documents and startup prompts instead of passively suggesting a switch.
@@ -59,6 +65,7 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+
 
 
 

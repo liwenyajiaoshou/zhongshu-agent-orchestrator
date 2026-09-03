@@ -207,3 +207,26 @@ Owner 已报告执行
 - 新线程启动提示词。
 
 不在聊天正文重复交接文档全文。
+
+
+## 13. Research 模式的 Owner 投影
+
+RESEARCH 任务在网页端只需要向 Owner 显示最小决策信息：
+
+```text
+研究模式：普通联网 / 定向 Deep Research
+关键证据缺口：<存在时才显示>
+升级原因：<进入 Targeted Deep 时才显示>
+研究结论：足以决策 / 证据仍不足
+下一步：停止 / 定向补证 / 进入 Execution
+```
+
+禁止把完整 research_quality 字段、来源计数或长篇检索过程搬到网页正文。
+
+如果 Deep Research 已完成但证据不足，应明确写：
+
+```text
+研究结论：证据仍不足
+```
+
+不得因 Deep Research 模式本身显示 PASS。

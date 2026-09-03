@@ -75,3 +75,9 @@
 40. 新线程启动提示词必须要求先到文件库检索指定交接文档；读取后只按 authoritative_sources 获取必要证据，不回扫完整历史，并依据 CURRENT AUTHORITATIVE STATE / current_next_action 接管。
 41. Report Compression Must Preserve Decision-Critical Evidence：精简报告不得省略会改变下一步动作、风险判断、blocker attribution 或 Owner 操作要求的证据。
 42. 当 Owner 已报告执行但预期 machine-readable artifacts 缺失/不可读/不可访问时，进入只读 execution evidence recovery；Owner 报告“已执行”不等于 runner/API 已启动；禁止自动 retry/second live，并保留最小 execution_gate_evidence、blocker_attribution、remaining_evidence_gap。
+
+43. Deep Research 只是 retrieval / source coverage 放大器，不是质量保证；不得因使用 Deep Research 默认认为 Research PASS。
+44. RESEARCH 默认 Normal Research First；只有存在明确 decision-critical evidence gap 时才升级 Targeted Deep Research。
+45. 选择研究模式前先冻结 Decision Question、实体消歧、cutoff、Evidence Schema 和 Stop Condition；Research depth 依据证据链、primary source、历史关系和 gap resolution 判断，不依据来源数量或报告长度。
+46. Research Mode、Model Tier、Agent Count、Task Class 必须独立路由；Deep Research 不自动意味着 high model、more agents 或 C 类任务。
+47. 昂贵/长时间 Research 优先做小样本 mode validation；A/B 研究需显式注意 File Library、共享项目上下文和检索片段 contamination。
