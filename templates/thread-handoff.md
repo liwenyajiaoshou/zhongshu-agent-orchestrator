@@ -149,3 +149,38 @@ switch_reason:
 ```
 
 新 Codex 线程不得仅因上一线程使用 high tier 就自动继承 high tier。
+
+
+## 子统筹线程启动（仅主统筹 → 子统筹时使用）
+
+```yaml
+thread_name:
+target_direction:
+current_stage:
+allowed_scope:
+forbidden_scope:
+authoritative_sources:
+current_next_action:
+```
+
+### 子线程第一步
+
+```text
+先做 Scope Match Check：
+比较当前收到的任务/文档与 target_direction、current_stage、allowed_scope、authoritative_sources。
+
+若 MISMATCH：
+- 不吸收为 authority；
+- 不施工；
+- 提示“当前指令与本线程方向不匹配，可能发送到了错误线程”。
+
+若 AMBIGUOUS：
+- 只请求最小澄清；
+- 不擅自扩 scope。
+
+只有 PASS 后再按 authoritative_sources 读取必要证据并推进。
+```
+
+### 命名
+
+`thread_name` 优先使用 Owner 常用语言，保持短、直观，不默认英语、内部术语或缩写堆叠。

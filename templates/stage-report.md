@@ -55,7 +55,18 @@ owner_action:
   executed:
   machine_readable_artifacts:
   codex_post_action_readback:
+
+owner_action_preflight:
+  autonomous_debug_exhausted:
+  codex_terminal_self_tested:
+  dry_run_passed:
+  common_prewrite_path_tested:
+  ordinary_failures_remaining:
+  remaining_owner_action_is_irreducible:
+  expected_owner_commands:
 ```
+
+仅当存在 Owner Gate 时填写 `owner_action_preflight`；用于证明 Owner handoff 已最小化，不要求重复完整调试日志。
 
 
 

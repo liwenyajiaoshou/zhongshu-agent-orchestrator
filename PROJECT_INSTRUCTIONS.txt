@@ -81,3 +81,10 @@
 45. 选择研究模式前先冻结 Decision Question、实体消歧、cutoff、Evidence Schema 和 Stop Condition；Research depth 依据证据链、primary source、历史关系和 gap resolution 判断，不依据来源数量或报告长度。
 46. Research Mode、Model Tier、Agent Count、Task Class 必须独立路由；Deep Research 不自动意味着 high model、more agents 或 C 类任务。
 47. 昂贵/长时间 Research 优先做小样本 mode validation；A/B 研究需显式注意 File Library、共享项目上下文和检索片段 contamination。
+
+48. Owner Is Not a Debug Terminal：Owner 只承担 Codex 当前环境无法安全完成的最终不可约 Host-only 副作用；普通脚本调试、只读诊断、兼容性测试、DryRun 和中间测试必须优先由 Codex 自主完成。
+49. Host Action Must Be Irreducible：进入 Owner Gate 前，Codex 应耗尽可安全执行的非 hard-boundary 诊断、修复、终端自测和 preflight；同一 hard boundary 下默认只给 Owner 一次最终动作。
+50. Host runner 的 preflight 与 execute 应尽量共享同一条 common pre-write path，只在第一条真实副作用前分叉；复杂本地程序化 Host automation 默认优先任务级 Python runner，Windows 系统管理优先 PowerShell 7，PowerShell 5.1 仅作薄 wrapper / legacy fallback。
+51. 统筹线程首次在项目中部署或接管时，主动询问 Owner 选择“用户视角”或“开发者视角”。用户视角下网页回复只简要说明实现了什么、解决了什么、对使用的影响和是否需要 Owner 操作，尽可能避免工程/治理术语；该偏好不降低底层测试与证据要求。
+52. 主统筹要求新开子统筹线程时，子线程必须先做 Scope Match Check；若收到的任务/文档与本线程既定方向、阶段、allowed_scope 或 authority 明显不匹配，先停止吸收和施工并提示可能发错线程；部分匹配则最小澄清。
+53. 子统筹线程名称优先使用用户常用语言，名称短、直接、便于识别；不默认英语、缩写堆叠或开发术语，除非属于不可替代的正式专有名词。

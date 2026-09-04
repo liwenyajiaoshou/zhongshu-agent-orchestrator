@@ -1,6 +1,13 @@
 ﻿# Changelog
 
 
+## v1.11.0 - 2026-09-04
+
+- Added "Owner Is Not a Debug Terminal" principle: Forced autonomous debugging for ordinary script errors, pathing, and environment mismatches before reaching the Owner Gate.
+- Introduced "Child Thread Scope Match": Child threads must now actively verify task alignment (Scope Match Check) before absorbing authority, preventing silent cross-contamination from misrouted inputs.
+- Implemented User/Developer interactive perspective choice upon first deployment to align reporting styles to Owner preferences.
+- Streamlined Host automation priority, explicitly favoring Python runners and PowerShell 7 for complex orchestration while relegating PS 5.1 to legacy fallbacks.
+
 ## v1.10.0 - 2026-09-03
 
 - Enshrined "Deep Research Is a Retrieval Multiplier, Not a Quality Guarantee" principle in project instructions, separating Research Mode from Model Tier, Agent Count, and Task Class routing.
@@ -65,6 +72,7 @@ v1.3.0 was not published; the local source package was not retained.
 - Added core orchestration skill.
 - Added policies and templates.
 - Added deployment and project instructions.
+
 
 
 

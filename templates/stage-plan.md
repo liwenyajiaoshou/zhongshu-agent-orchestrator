@@ -98,9 +98,24 @@ owner_action:
   exact_command:
   max_calls:
   post_action_artifacts: []
+
+owner_action_preflight:
+  autonomous_debug_exhausted: true | false | NOT_APPLICABLE
+  codex_terminal_self_tested: true | false | NOT_APPLICABLE
+  artifact_parse_validated: PASS | FAIL | NOT_APPLICABLE
+  dry_run_passed: PASS | FAIL | NOT_APPLICABLE
+  workspace_or_repo_sanity: PASS | FAIL | UNKNOWN | NOT_APPLICABLE
+  input_manifest_validation: PASS | FAIL | UNKNOWN | NOT_APPLICABLE
+  collision_check: PASS | FAIL | UNKNOWN | NOT_APPLICABLE
+  host_runtime_simulated_or_invoked: true | false | NOT_APPLICABLE
+  common_prewrite_path_tested: true | false | NOT_APPLICABLE
+  ordinary_failures_remaining: 0
+  remaining_owner_action_is_irreducible: true | false | NOT_APPLICABLE
+  expected_owner_commands: 0 | 1
 ```
 
 PowerShell / Shell / Python / CLI 不作为 Owner Gate 判据。
+复杂本地 Host orchestration 默认优先任务级 Python runner；PowerShell 5.1 仅作短命令/薄 wrapper/legacy fallback。
 
 ## debug_escalation
 

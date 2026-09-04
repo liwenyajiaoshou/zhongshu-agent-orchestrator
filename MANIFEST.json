@@ -1,8 +1,8 @@
 {
   "name": "中枢",
-  "runtime_version": "V1.10.0",
-  "stage": "S2.9",
-  "date": "2026-09-03",
+  "runtime_version": "V1.11.0",
+  "stage": "S2.10",
+  "date": "2026-09-04",
   "upgrade_focus": [
     "Web dialog UX",
     "Review format standard",
@@ -17,9 +17,13 @@
     "Preserve decision-critical evidence in report compression",
     "Research mode isolation from model/agent/task class",
     "Normal Research First principle",
-    "Deep Research on Decision-Critical Gaps only"
+    "Deep Research on Decision-Critical Gaps only",
+    "Owner is not a debug terminal",
+    "Irreducible host action and common prewrite path",
+    "First deployment interaction perspective (User/Developer)",
+    "Child thread scope match check"
   ],
-  "latest_upgrade": "Deep Research Routing and Mode Independence",
+  "latest_upgrade": "Host Handoff Convergence and Child Thread Scope Match",
   "scope_note": "Public presentation and documentation overhaul",
   "principles": [
     "Cached Context Is Not Free Context",

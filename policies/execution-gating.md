@@ -225,3 +225,128 @@ remaining_evidence_gap:
 ```
 
 这只是既有 Owner Gate 的异常恢复分支，不是新的 Execution Manager 或 Owner Gate 状态机。
+
+
+## Host Action Must Be Irreducible
+
+`Minimum Owner Gate` 的进一步要求是：
+
+> 在把动作交给 Owner 前，Codex 必须先耗尽当前环境内所有可安全执行的非 hard-boundary 诊断、修复、终端测试、DryRun 与 preflight。
+
+Owner 不承担：
+- 首次发现脚本语法错误；
+- 首次发现路径 / 编码 / quoting 问题；
+- native command exit-code 调试；
+- manifest / staged state / branch-worktree collision 只读检查；
+- 普通 Host runtime compatibility 调试；
+- DryRun 首次验证。
+
+进入 Owner Gate 前建议形成：
+
+```yaml
+owner_action_preflight:
+  autonomous_debug_exhausted: true | false
+  all_non_hard_boundary_steps_exhausted: true | false
+  codex_terminal_self_tested: true | false
+  artifact_generated: true | false
+  artifact_parse_validated: true | false
+  dry_run_available: true | false
+  dry_run_passed: true | false
+  workspace_or_repo_sanity: PASS | FAIL | UNKNOWN
+  input_manifest_validation: PASS | FAIL | UNKNOWN
+  collision_check: PASS | FAIL | UNKNOWN
+  forbidden_action_check: PASS | FAIL | UNKNOWN
+  host_runtime_simulated_or_invoked: true | false
+  common_prewrite_path_tested: true | false
+  ordinary_failures_remaining:
+  remaining_owner_action_is_irreducible: true | false
+  expected_owner_commands:
+```
+
+默认只有：
+
+```yaml
+autonomous_debug_exhausted: true
+ordinary_failures_remaining: 0
+remaining_owner_action_is_irreducible: true
+expected_owner_commands: 1
+```
+
+才进入最终 Owner handoff。
+
+如果同一 hard boundary 下连续要求 Owner 手工执行多轮普通测试，应视为：
+
+```text
+OWNER_HANDOFF_NOT_MINIMIZED
+```
+
+并退回 Codex 自主调试。
+
+---
+
+## Common Prewrite Path
+
+当 Owner Action 依赖脚本或 runner：
+
+```text
+COMMON INITIALIZATION
+→ workspace/repo discovery
+→ path normalization
+→ sanity checks
+→ pre-existing state
+→ manifest/input validation
+→ collision checks
+→ all pre-write preparation
+→ PREWRITE_BOUNDARY
+→ if preflight: emit machine-readable result + exit
+→ if execute: first real side effect
+→ post-action readback
+```
+
+原则：
+
+> preflight 与 execute 必须尽量共享相同的 pre-write 路径；分叉点应尽量晚到第一条真实副作用之前。
+
+不得用一套简化 DryRun 代替正式执行路径的关键初始化和检查。
+
+---
+
+## Complex Host Automation Language Routing
+
+执行语言只按任务形态选择，不改变治理边界：
+
+```yaml
+host_execution_routing:
+  codex_direct: PREFERRED_IF_CAPABLE
+  complex_local_automation: PYTHON_RUNNER
+  windows_system_administration: POWERSHELL_7
+  powershell_5_1: THIN_WRAPPER_OR_LEGACY_FALLBACK
+```
+
+### Python runner 适合
+
+当任务同时包含多项：
+- Unicode / 非 ASCII 路径；
+- Git subprocess orchestration；
+- exact manifest；
+- staged equality；
+- branch/worktree lifecycle；
+- machine-readable preflight；
+- 多阶段本地安全检查。
+
+推荐任务级薄 runner：
+
+```text
+python <task_runner.py> --preflight
+python <task_runner.py> --execute
+```
+
+Codex 负责 build / self-test / preflight / repair；Owner 默认只执行最终一次 `--execute`。
+
+### PowerShell
+
+- Windows Registry / Service / OS policy / 系统管理：优先 PowerShell 7；
+- Windows PowerShell 5.1：只用于短命令、薄 wrapper 或 legacy fallback；
+- 若复杂 `.ps1` 连续出现 encoding / Provider / native command / path / runtime compatibility 问题，应评估语言换挡，而不是无限修补。
+
+> 换执行语言不能绕过 Owner Gate，也不能扩大 Git / API / production side-effect 授权。

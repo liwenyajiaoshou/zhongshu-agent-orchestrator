@@ -147,3 +147,45 @@ authoritative_sources
 - 再请求最小必要定位信息。
 
 本规则不建立交接管理器，只规范现有 Full / Delta Handoff 的交付方式。
+
+
+## 7. 主统筹 → 子统筹线程的安全启动
+
+主统筹向子统筹线程交付任务时，应明确：
+
+```yaml
+thread_name:
+target_direction:
+current_stage:
+allowed_scope:
+forbidden_scope:
+authoritative_sources:
+current_next_action:
+```
+
+子统筹线程收到后，第一步必须做：
+
+```yaml
+scope_match:
+  status: PASS | MISMATCH | AMBIGUOUS
+  conflicts: []
+```
+
+### MISMATCH
+
+如果指令 / 文档明显属于其他 Track、阶段、题材、子项目或超出本线程方向：
+
+- 不吸收为本线程 authority；
+- 不进入施工；
+- 明确提示可能发送到了错误线程；
+- 有可靠依据时指出更可能的目标方向。
+
+### AMBIGUOUS
+
+只做最小澄清，不擅自把 scope 扩大为“都处理”。
+
+### 命名
+
+主统筹建议的子线程名称应跟随 Owner 常用语言，保持简短，不默认英语或内部开发术语。
+
+本规则只增加输入防误投，不建立 Thread Router 或 Handoff Manager。

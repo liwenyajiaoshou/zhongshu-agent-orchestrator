@@ -1,4 +1,4 @@
-# 中枢 Runtime Deployment Pack V1.10
+# 中枢 Runtime Deployment Pack V1.11
 
 ## 1. 这是什么
 
@@ -300,7 +300,7 @@ git status
 
 ## 10. 当前版本边界
 
-V1.10 Runtime 不做：
+V1.11 Runtime 不做：
 
 - 自动修改本地代码；
 - 自动 Git；
@@ -631,3 +631,48 @@ Question
 
 鏄傝吹鐮旂┒鍏堝仛灏忔牱鏈?mode validation銆?
 A/B 鐮旂┒闇€娉ㄦ剰 File Library / shared context / snippet contamination銆
+
+---
+
+## V1.11 鏂板锛欻ost Handoff 鏀舵暃涓庡缁熺绾跨▼闃茶鎶?
+
+### Host / Owner Gate
+
+鏂板锛?
+
+```text
+Owner Is Not a Debug Terminal
+Host Action Must Be Irreducible
+Common Prewrite Path
+Complex Host Automation Prefers Python
+```
+
+榛樿閾捐矾锛?
+
+```text
+Codex 鑷富璇婃柇 / 淇 / 缁堢鑷祴 / preflight
+鈫?鍙墿涓嶅彲绾?Host-only side effect
+鈫?Owner 榛樿鎵ц 1 娆?
+鈫?Codex machine-state readback
+```
+
+澶嶆潅鏈湴绋嬪簭鍖?Host orchestration 浼樺厛浠诲姟绾?Python runner锛沇indows 绯荤粺绠＄悊浼樺厛 PowerShell 7锛沇indows PowerShell 5.1 浠呬綔鐭懡浠ゃ€佽杽 wrapper 鎴?legacy fallback銆?
+
+### 棣栨閮ㄧ讲浜や簰瑙嗚
+
+缁熺绾跨▼绗竴娆″湪椤圭洰涓儴缃?鎺ョ鏃讹紝涓诲姩璇㈤棶锛?
+
+```text
+鐢ㄦ埛瑙嗚 / 寮€鍙戣€呰瑙?
+```
+
+鐢ㄦ埛瑙嗚涓嬶紝缃戦〉鍥炲灏介噺鍙鍔熻兘銆侀棶棰樸€佸疄闄呭奖鍝嶅拰鏄惁闇€瑕?Owner 鎿嶄綔銆?
+
+### 瀛愮粺绛圭嚎绋嬪畨鍏ㄥ惎鍔?
+
+涓荤粺绛瑰彂甯冨瓙绾跨▼浠诲姟鏃讹細
+- 浣跨敤鐢ㄦ埛甯哥敤璇█鐨勭畝鐭悕绉帮紱
+- 鎻愪緵 target_direction / current_stage / allowed_scope / authoritative_sources锛?
+- 瀛愮嚎绋嬫墽琛屽墠鍏堝仛 Scope Match Check锛?
+- 鐤戜技璇彂鍒欏仠姝㈠惛鏀跺拰鏂藉伐锛?
+- 姝т箟鏃跺彧鍋氭渶灏忔緞娓呫€

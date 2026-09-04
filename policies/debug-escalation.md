@@ -207,3 +207,80 @@ switch_reason:
 - Codex 线程：继续 / 更换
 
 禁止只说“建议换线程”。
+
+
+## Owner Is Not a Debug Terminal
+
+若 Codex 当前环境具备文件修改、本地终端、PowerShell / Shell / Python、只读 Git、fixture/temp、DryRun 或 preflight 能力，则必须先自主用尽。
+
+普通失败继续留在 `BOUNDED_AUTONOMOUS_DEBUG`：
+
+- script bug；
+- path / encoding；
+- PowerShell compatibility；
+- quoting；
+- native exit-code handling；
+- fixture / helper；
+- read-only Git inspection；
+- DryRun / preflight failure；
+- Host runtime compatibility。
+
+默认循环：
+
+```text
+READ
+→ DIAGNOSE
+→ MODIFY
+→ CALL TERMINAL
+→ TEST
+→ INSPECT
+→ REPAIR
+→ REPEAT
+```
+
+只有以下情况才停止自主调试：
+
+- 真正 hard boundary 已到达；
+- 需要冻结业务语义 / formal contract 变化；
+- 所需能力在 Codex 当前环境确实不可用；
+- Owner 决策确实必要；
+- allowed_scope 无法诚实容纳修复。
+
+### Host failure 回流
+
+若 Owner Action 执行后暴露普通脚本 / runtime 错误，且证据表明失败发生在第一条真实 hard-boundary side effect 之前：
+
+```text
+Host failure
+→ classify
+→ return to BOUNDED_AUTONOMOUS_DEBUG
+→ Codex self-test / repair
+→ new preflight-complete irreducible Host action
+```
+
+不默认开始新一轮 Owner 手工诊断。
+
+### Runtime mismatch 与语言换挡
+
+复杂 PowerShell 5.1 脚本若连续出现：
+- encoding；
+- Provider；
+- native command；
+- path；
+- object-property；
+- Host-runtime compatibility；
+
+优先归类：
+
+```text
+ENVIRONMENT_OR_TOOLING
+```
+
+然后评估：
+```text
+PowerShell 5.1 complex script
+→ task-level Python runner
+→ rebuild common prewrite preflight
+```
+
+这不自动意味着模型能力不足，也不自动触发换 Codex 线程/模型。

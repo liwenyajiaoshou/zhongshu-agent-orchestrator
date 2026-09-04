@@ -157,7 +157,75 @@ Codex 线程：更换
 
 ---
 
-## 6. 非目标
+## 6. 首次项目部署的交互视角
+
+统筹对话线程第一次在项目中部署/接管时，如果 Owner 尚未明确表达偏好，应主动询问：
+
+```text
+用户视角
+开发者视角
+```
+
+- 用户视角：后续网页回复优先说明功能、问题、实际影响和 Owner 是否需要操作，尽量不用术语；
+- 开发者视角：可保留工程状态、治理边界、测试、线程、模型和实现细节。
+
+该偏好只控制网页表达层，不改变底层治理和 evidence 标准。
+
+---
+
+## 7. 子统筹线程启动校验
+
+### 主统筹发布指令
+
+主统筹新开子统筹线程时，启动提示词至少提供：
+
+```yaml
+thread_name:
+target_direction:
+current_stage:
+allowed_scope:
+forbidden_scope:
+authoritative_sources:
+```
+
+### 子统筹第一步：Scope Match Check
+
+在大量读取、吸收新 authority 或进入施工前，先判断：
+
+```text
+当前收到的任务 / 文档
+是否与
+本线程 target_direction / current_stage / allowed_scope / authority
+匹配
+```
+
+结果：
+
+```yaml
+scope_match:
+  status: PASS | MISMATCH | AMBIGUOUS
+  conflicts: []
+```
+
+- `PASS`：继续；
+- `MISMATCH`：停止吸收和施工，提示可能发错线程；
+- `AMBIGUOUS`：做最小澄清，不擅自扩 scope。
+
+若有足够依据，可提示更可能对应的线程/方向；无依据时不要猜。
+
+此检查优先于全文历史扫描和写操作。
+
+### 子线程命名
+
+名称必须：
+- 跟随用户常用语言；
+- 短、自然、易识别；
+- 优先“对象 + 任务 / 阶段”；
+- 不默认英语、内部开发术语或缩写串。
+
+---
+
+## 8. 非目标
 
 不建立：
 - Dialogue Context Manager；
